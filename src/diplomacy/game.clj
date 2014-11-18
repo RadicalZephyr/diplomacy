@@ -11,6 +11,36 @@
 ;;    the country that controls them an extra fleet or army. All
 ;;    Supply Centers are on land provinces
 
+;; Define the starting places/pieces
+(def starting-pieces {:austria {"Vienna"          :army
+                                "Budapest"        :army
+                                "Trieste"         :fleet}
+
+                      :england {"London"          :fleet
+                                "Edinburgh"       :fleet
+                                "Liverpool"       :army}
+
+                      :france  {"Paris"           :army
+                                "Marseilles"      :army
+                                "Brest"           :fleet}
+
+                      :germany {"Berlin"          :army
+                                "Munich"          :army
+                                "Kiel"            :fleet}
+
+                      :italy   {"Rome"            :army
+                                "Venice"          :army
+                                "Naples"          :fleet}
+
+                      :russia  {"Moscow"          :army
+                                "Sevastopol"      :fleet
+                                "Warsaw"          :army
+                                "St Petersburg"   :fleet}
+
+                      :turkey  {"Ankara"          :fleet
+                                "Constantinople"  :army
+                                "Smyrna"          :army}})
+
 
 ;; This is the canonical source of data on the Diplomacy map. The
 ;; mapping of abbreviations to provinces is built from this map and,
