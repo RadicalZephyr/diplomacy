@@ -1,5 +1,9 @@
 (ns diplomacy.game)
 
+;; This is the canonical source of data on the Diplomacy map. The
+;; mapping of abbreviations to countries is built from this map and,
+;; this represents the "truth" about the board at the beginning of the
+;; game
 (def countries {"Switzerland" {:name "Switzerland" :type :l
                                :abbreviatons ["swi" "switz"] }
                 "Adriatic Sea" {:name "Adriatic Sea" :type :w
@@ -160,8 +164,6 @@
                 "Yorkshire" {:name "Yorkshire" :type :l
                              :abbreviatons ["yor" "york" "yonkers"] }
                 }  )
-
-(def board {})
 
 (def abbreviations (atom {}))
 
