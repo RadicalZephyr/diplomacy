@@ -528,3 +528,8 @@
                     (assoc-in ps [name :type]
                               :diplomacy.game.movement/inland))
                   ps))
+
+(defn as-sorted-maps [ps]
+  (reduce (fn [b [name data]]
+            (assoc b name (into (sorted-map) data)))
+          {} ps))
