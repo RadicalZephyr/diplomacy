@@ -1,5 +1,17 @@
 (ns diplomacy.game)
 
+;; Short Diplomacy glossary:
+
+;;  Great Power - One of the players in the game, also called a "country"
+
+;;  Province - The areas that the board is divided up into. Basically
+;;    any place on the board that has a name
+
+;;  Supply Center - Special types of provinces on the board that grant
+;;    the country that controls them an extra fleet or army. All
+;;    Supply Centers are on land provinces
+
+
 ;; This is the canonical source of data on the Diplomacy map. The
 ;; mapping of abbreviations to provinces is built from this map and,
 ;; this represents the "truth" about the board at the beginning of the
