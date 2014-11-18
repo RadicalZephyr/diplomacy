@@ -253,3 +253,21 @@
                                :occupied-by ::nothing}))
            {})
    place-starting-pieces))
+
+(defn change-types [provinces [name {:keys [type]}]]
+  (let [land-type (case type
+                    :w                           :diplomacy.game.movement/water
+                    (:A :E :F :G :I :R :T :x :l) :diplomacy.game.movement/land)
+        sc-type   (case type
+                    (:l :w) :diplomacy.game.sc/na
+                    :x      :diplomacy.game.sc/independent
+                    :A      :diplomacy.game.sc/austria
+                    :E      :diplomacy.game.sc/england
+                    :F      :diplomacy.game.sc/france
+                    :G      :diplomacy.game.sc/germany
+                    :I      :diplomacy.game.sc/italy
+                    :R      :diplomacy.game.sc/russia
+                    :T      :diplomacy.game.sc/turkey)]
+    (-> provinces
+        (assoc-in [name :type] land-type)
+        (assoc-in [name :sc-type] sc-type))))
