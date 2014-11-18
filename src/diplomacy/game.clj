@@ -230,10 +230,25 @@
 
 (defrecord Unit [type owner])
 
+(defn make-unit [type owner]
+  (Unit. type owner))
+
+(defn add-units-for-country [board [country units]]
+  (reduce (fn [board [province type]] (assoc-in board
+                                                [province :occupied-by]
+                                                (Unit. type country)))
+          board
+          units))
+
+(defn place-starting-pieces [board]
+  (reduce add-units-for-country board starting-pieces))
+
 (defn initialize-board
   "Returns a game board initialized to the start of game state."
   []
-  (reduce (fn [acc [pname {:keys [type]}]]
-            (assoc acc pname {:type type
-                              :occupied-by ::nothing}))
-          {} provinces))
+  (->> provinces
+   (reduce (fn [acc [pname {:keys [type]}]]
+             (assoc acc pname {:type type
+                               :occupied-by ::nothing}))
+           {})
+   place-starting-pieces))
