@@ -469,31 +469,6 @@
            {})
    place-starting-pieces))
 
-(defn check-province-movement-type [province expected]
-  (let [movement-type (cond
-                       ;; Must be iterating through a seq of provinces
-                       (and (vector? province)
-                            (= (count province)
-                               2))
-                       (get-in province [1 :movement-type])
-
-                       ;; Got a simple province map
-                       (map? province)
-                       (get province :movement-type))]
-    (= movement-type
-       expected)))
-
-(defn land-locked? [province]
-  (check-province-movement-type province
-                                :diplomacy.game.movement/inland))
-
-(defn coastal? [province]
-  (check-province-movement-type province
-                                :diplomacy.game.movement/coastal))
-
-(defn water? [province]
-  (check-province-movement-type province
-                                :diplomacy.game.movement/water))
 
 (defn transform-when [pred trans coll]
   (reduce trans
