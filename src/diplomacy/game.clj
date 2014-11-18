@@ -1,4 +1,5 @@
-(ns diplomacy.game)
+(ns diplomacy.game
+  (:require [diplomacy.game.unit :as u]))
 
 ;; Short Diplomacy glossary:
 
@@ -12,34 +13,34 @@
 ;;    Supply Centers are on land provinces
 
 ;; Define the starting places/pieces
-(def starting-pieces {:austria {"Vienna"          :diplomacy.game.unit/army
-                                "Budapest"        :diplomacy.game.unit/army
-                                "Trieste"         :diplomacy.game.unit/fleet}
+(def starting-pieces {::austria {"Vienna"          u/make-army
+                                 "Budapest"        u/make-army
+                                 "Trieste"         u/make-fleet}
 
-                      :england {"London"          :diplomacy.game.unit/fleet
-                                "Edinburgh"       :diplomacy.game.unit/fleet
-                                "Liverpool"       :diplomacy.game.unit/army}
+                      ::england {"London"          u/make-fleet
+                                 "Edinburgh"       u/make-fleet
+                                 "Liverpool"       u/make-army }
 
-                      :france  {"Paris"           :diplomacy.game.unit/army
-                                "Marseilles"      :diplomacy.game.unit/army
-                                "Brest"           :diplomacy.game.unit/fleet}
+                      ::france  {"Paris"           u/make-army
+                                 "Marseilles"      u/make-army
+                                 "Brest"           u/make-fleet}
 
-                      :germany {"Berlin"          :diplomacy.game.unit/army
-                                "Munich"          :diplomacy.game.unit/army
-                                "Kiel"            :diplomacy.game.unit/fleet}
+                      ::germany {"Berlin"          u/make-army
+                                 "Munich"          u/make-army
+                                 "Kiel"            u/make-fleet}
 
-                      :italy   {"Rome"            :diplomacy.game.unit/army
-                                "Venice"          :diplomacy.game.unit/army
-                                "Naples"          :diplomacy.game.unit/fleet}
+                      ::italy   {"Rome"            u/make-army
+                                 "Venice"          u/make-army
+                                 "Naples"          u/make-fleet}
 
-                      :russia  {"Moscow"          :diplomacy.game.unit/army
-                                "Sevastopol"      :diplomacy.game.unit/fleet
-                                "Warsaw"          :diplomacy.game.unit/army
-                                "St Petersburg"   :diplomacy.game.unit/fleet}
+                      ::russia  {"Moscow"          u/make-army
+                                 "Sevastopol"      u/make-fleet
+                                 "Warsaw"          u/make-army
+                                 "St Petersburg"   u/make-fleet}
 
-                      :turkey  {"Ankara"          :diplomacy.game.unit/fleet
-                                "Constantinople"  :diplomacy.game.unit/army
-                                "Smyrna"          :diplomacy.game.unit/army}})
+                      ::turkey  {"Ankara"          u/make-fleet
+                                 "Constantinople"  u/make-army
+                                 "Smyrna"          u/make-army }})
 
 
 ;; This is the canonical source of data on the Diplomacy map. The
@@ -444,10 +445,10 @@
        (get provinces)))
 
 (defn add-units-for-country [board [country units]]
-  (reduce (fn [board [province type]]
+  (reduce (fn [board [province mk-unit]]
             (assoc-in board
                       [province :occupied-by]
-                      (Unit. type country)))
+                      (mk-unit country)))
           board
           units))
 
