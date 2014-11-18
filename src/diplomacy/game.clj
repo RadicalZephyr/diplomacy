@@ -1,10 +1,10 @@
 (ns diplomacy.game)
 
 ;; This is the canonical source of data on the Diplomacy map. The
-;; mapping of abbreviations to countries is built from this map and,
+;; mapping of abbreviations to provinces is built from this map and,
 ;; this represents the "truth" about the board at the beginning of the
 ;; game
-(def countries {"Switzerland" {:name "Switzerland" :type :l
+(def provinces {"Switzerland" {:name "Switzerland" :type :l
                                :abbreviatons ["swi" "switz"] }
                 "Adriatic Sea" {:name "Adriatic Sea" :type :w
                                 :abbreviatons ["adr" "adriatic"] }
@@ -165,6 +165,9 @@
                              :abbreviatons ["yor" "york" "yonkers"] }
                 }  )
 
+;; This is a convenience data structure built from the province map.
+;; It allows us to do a fast lookup from abbreviations to the
+;; corresponding province name
 (def abbreviations (atom {}))
 
 (defn add-to-abbreviations [board-atm [name {abbrevs :abbreviatons}]]
@@ -172,7 +175,7 @@
 
 (defn build-abbreviations []
   (dorun (map (partial add-to-abbreviations abbreviations)
-              countries)))
+              provinces)))
 
 (build-abbreviations)
 
@@ -181,4 +184,4 @@
 (defn abbrev->area [abbrev]
   (->> abbrev
        (get @abbreviations)
-       (get countries)))
+       (get provinces)))
