@@ -197,3 +197,13 @@
   (->> abbrev
        (get @abbreviations)
        (get provinces)))
+
+(defrecord Unit [type owner])
+
+(defn initialize-board
+  "Returns a game board initialized to the start of game state."
+  []
+  (reduce (fn [acc [pname {:keys [type]}]]
+            (assoc acc pname {:type type
+                              :occupied-by ::nothing}))
+          {} provinces))
