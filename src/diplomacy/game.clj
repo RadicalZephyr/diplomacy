@@ -516,3 +516,10 @@
                       :diplomacy.game.movement/coastal))
           ps
           (filter coastal? ps)))
+
+(defn remark-landlocked [ps]
+  (reduce (fn [ps [name data]]
+            (assoc-in ps [name :type]
+                      :diplomacy.game.movement/inland))
+          ps
+          (filter land-locked? ps)))
