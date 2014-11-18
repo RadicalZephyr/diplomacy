@@ -443,11 +443,6 @@
        (get @abbreviations)
        (get provinces)))
 
-(defrecord Unit [type owner])
-
-(defn make-unit [type owner]
-  (Unit. type owner))
-
 (defn add-units-for-country [board [country units]]
   (reduce (fn [board [province type]]
             (assoc-in board
