@@ -1,10 +1,15 @@
 (ns diplomacy.game.unit)
 
+(defprotocol Unit)
 
-(defrecord Unit [type owner])
+(defrecord Fleet [owner]
+  Unit)
+
+(defrecord Army [owner]
+  Unit)
 
 (defn make-fleet [owner]
-  (Unit. ::fleet owner))
+  (Fleet. owner))
 
 (defn make-army [owner]
-  (Unit. ::army owner))
+  (Army. owner))
