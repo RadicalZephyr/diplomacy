@@ -46,166 +46,386 @@
 ;; mapping of abbreviations to provinces is built from this map and,
 ;; this represents the "truth" about the board at the beginning of the
 ;; game
-(def provinces {"Switzerland" {:name "Switzerland" :type :l
-                               :abbreviatons ["swi" "switz"] }
-                "Adriatic Sea" {:name "Adriatic Sea" :type :w
-                                :abbreviatons ["adr" "adriatic"] }
-                "Aegean Sea" {:name "Aegean Sea" :type :w
-                              :abbreviatons ["aeg" "aegean"] }
-                "Albania" {:name "Albania" :type :l
-                           :abbreviatons ["alb"] }
-                "Ankara" {:name "Ankara" :type :T
-                          :abbreviatons ["ank"] }
-                "Apulia" {:name "Apulia" :type :l
-                          :abbreviatons ["apu"] }
-                "Armenia" {:name "Armenia" :type :l
-                           :abbreviatons ["arm"] }
-                "Baltic Sea" {:name "Baltic Sea" :type :w
-                              :abbreviatons ["bal" "baltic"] }
-                "Barents Sea" {:name "Barents Sea" :type :w
-                               :abbreviatons ["bar" "barents"] }
-                "Belgium" {:name "Belgium" :type :x
-                           :abbreviatons ["bel"] }
-                "Berlin" {:name "Berlin" :type :G
-                          :abbreviatons ["ber"] }
-                "Black Sea" {:name "Black Sea" :type :w
-                             :abbreviatons ["bla" "black"] }
-                "Bohemia" {:name "Bohemia" :type :l
-                           :abbreviatons ["boh"] }
-                "Brest" {:name "Brest" :type :F
-                         :abbreviatons ["bre"] }
-                "Budapest" {:name "Budapest" :type :A
-                            :abbreviatons ["bud"] }
-                "Bulgaria" {:name "Bulgaria" :type :x
-                            :abbreviatons ["bul"] }
-                "Burgundy" {:name "Burgundy" :type :l
-                            :abbreviatons ["bur"] }
-                "Clyde" {:name "Clyde" :type :l
-                         :abbreviatons ["cly"] }
-                "Constantinople" {:name "Constantinople" :type :T
-                                  :abbreviatons ["con"] }
-                "Denmark" {:name "Denmark" :type :x
-                           :abbreviatons ["den"] }
-                "Eastern Mediterranean" {:name "Eastern Mediterranean" :type :w
-                                         :abbreviatons ["eas" "emed" "east"
-                                                        "eastern" "eastmed"
-                                                        "ems" "eme"] }
-                "Edinburgh" {:name "Edinburgh" :type :E
-                             :abbreviatons ["edi"] }
-                "English Channel" {:name "English Channel" :type :w
-                                   :abbreviatons ["eng" "english" "channel" "ech"] }
-                "Finland" {:name "Finland" :type :l
-                           :abbreviatons ["fin"] }
-                "Galicia" {:name "Galicia" :type :l
-                           :abbreviatons ["gal"] }
-                "Gascony" {:name "Gascony" :type :l
-                           :abbreviatons ["gas"] }
-                "Greece" {:name "Greece" :type :x
-                          :abbreviatons ["gre"] }
-                "Gulf of Lyon" {:name "Gulf of Lyon" :type :w
-                                :abbreviatons ["lyo" "gol" "gulfofl" "lyon"] }
-                "Gulf of Bothnia" {:name "Gulf of Bothnia" :type :w
-                                   :abbreviatons ["bot" "gob" "both"
-                                                  "gulfofb" "bothnia"] }
-                "Helgoland Bight" {:name "Helgoland Bight" :type :w
-                                   :abbreviatons ["hel" "helgoland"] }
-                "Holland" {:name "Holland" :type :x
-                           :abbreviatons ["hol"] }
-                "Ionian Sea" {:name "Ionian Sea" :type :w
-                              :abbreviatons ["ion" "ionian"] }
-                "Irish Sea" {:name "Irish Sea" :type :w
-                             :abbreviatons ["iri" "irish"] }
-                "Kiel" {:name "Kiel" :type :G
-                        :abbreviatons ["kie"] }
-                "Liverpool" {:name "Liverpool" :type :E
-                             :abbreviatons ["lvp" "livp" "lpl"] }
-                "Livonia" {:name "Livonia" :type :l
-                           :abbreviatons ["lvn" "livo" "lvo" "lva"] }
-                "London" {:name "London" :type :E
-                          :abbreviatons ["lon"] }
-                "Marseilles" {:name "Marseilles" :type :F
-                              :abbreviatons ["mar" "mars"] }
-                "Mid Atlantic Ocean" {:name "Mid Atlantic Ocean" :type :w
-                                      :abbreviatons ["mao" "midatlanticocean"
-                                                     "midatlantic" "mid" "mat"] }
-                "Moscow" {:name "Moscow" :type :R
-                          :abbreviatons ["mos"] }
-                "Munich" {:name "Munich" :type :G
-                          :abbreviatons ["mun"] }
-                "Naples" {:name "Naples" :type :I
-                          :abbreviatons ["nap"] }
-                "North Atlantic Ocean" {:name "North Atlantic Ocean" :type :w
-                                        :abbreviatons ["nao" "nat"] }
-                "North Africa" {:name "North Africa" :type :l
-                                :abbreviatons ["naf" "nora"] }
-                "North Sea" {:name "North Sea" :type :w
-                             :abbreviatons ["nth" "norsea" "nts"] }
-                "Norway" {:name "Norway" :type :x
-                          :abbreviatons ["nor" "nwy" "norw"] }
-                "Norwegian Sea" {:name "Norwegian Sea" :type :w
-                                 :abbreviatons ["nwg" "norwsea" "nrg" "norwegian"] }
-                "Paris" {:name "Paris" :type :F
-                         :abbreviatons ["par"] }
-                "Picardy" {:name "Picardy" :type :l
-                           :abbreviatons ["pic"] }
-                "Piedmont" {:name "Piedmont" :type :l
-                            :abbreviatons ["pie"] }
-                "Portugal" {:name "Portugal" :type :x
-                            :abbreviatons ["por"] }
-                "Prussia" {:name "Prussia" :type :l
-                           :abbreviatons ["pru"] }
-                "Rome" {:name "Rome" :type :I
-                        :abbreviatons ["rom"] }
-                "Ruhr" {:name "Ruhr" :type :l
-                        :abbreviatons ["ruh"] }
-                "Rumania" {:name "Rumania" :type :x
-                           :abbreviatons ["rum"] }
-                "Serbia" {:name "Serbia" :type :x
-                          :abbreviatons ["ser"] }
-                "Sevastopol" {:name "Sevastopol" :type :R
-                              :abbreviatons ["sev" "sevastapol"] }
-                "Silesia" {:name "Silesia" :type :l
-                           :abbreviatons ["sil"] }
-                "Skagerrak" {:name "Skagerrak" :type :w
-                             :abbreviatons ["ska"] }
-                "Smyrna" {:name "Smyrna" :type :T
-                          :abbreviatons ["smy"] }
-                "Spain" {:name "Spain" :type :x
-                         :abbreviatons ["spa"] }
-                "St Petersburg" {:name "St Petersburg" :type :R
-                                 :abbreviatons ["stp"] }
-                "Sweden" {:name "Sweden" :type :x
-                          :abbreviatons ["swe"] }
-                "Syria" {:name "Syria" :type :l
-                         :abbreviatons ["syr"] }
-                "Trieste" {:name "Trieste" :type :A
-                           :abbreviatons ["tri"] }
-                "Tunis" {:name "Tunis" :type :x
-                         :abbreviatons ["tun"] }
-                "Tuscany" {:name "Tuscany" :type :l
-                           :abbreviatons ["tus"] }
-                "Tyrolia" {:name "Tyrolia" :type :l
-                           :abbreviatons ["tyr" "tyl" "trl"] }
-                "Tyrrhenian Sea" {:name "Tyrrhenian Sea" :type :w
-                                  :abbreviatons ["tys" "tyrr" "tyrrhenian"
-                                                 "tyn" "tyh"] }
-                "Ukraine" {:name "Ukraine" :type :l
-                           :abbreviatons ["ukr"] }
-                "Venice" {:name "Venice" :type :I
-                          :abbreviatons ["ven"] }
-                "Vienna" {:name "Vienna" :type :A
-                          :abbreviatons ["vie"] }
-                "Wales" {:name "Wales" :type :l
-                         :abbreviatons ["wal"] }
-                "Warsaw" {:name "Warsaw" :type :R
-                          :abbreviatons ["war"] }
-                "Western Mediterranean" {:name "Western Mediterranean" :type :w
-                                         :abbreviatons ["wes" "wmed" "west"
-                                                        "western" "westmed"
-                                                        "wms" "wme"] }
-                "Yorkshire" {:name "Yorkshire" :type :l
-                             :abbreviatons ["yor" "york" "yonkers"] }
-                }  )
+(def provinces {"North Africa"
+                {:abbreviatons ["naf" "nora"],
+                 :name "North Africa",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Apulia"
+                {:abbreviatons ["apu"],
+                 :name "Apulia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Kiel"
+                {:abbreviatons ["kie"],
+                 :name "Kiel",
+                 :sc-type :diplomacy.game.sc/germany,
+                 :type :diplomacy.game.movement/land},
+                "Munich"
+                {:abbreviatons ["mun"],
+                 :name "Munich",
+                 :sc-type :diplomacy.game.sc/germany,
+                 :type :diplomacy.game.movement/land},
+                "Brest"
+                {:abbreviatons ["bre"],
+                 :name "Brest",
+                 :sc-type :diplomacy.game.sc/france,
+                 :type :diplomacy.game.movement/land},
+                "Portugal"
+                {:abbreviatons ["por"],
+                 :name "Portugal",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Gulf of Lyon"
+                {:abbreviatons ["lyo" "gol" "gulfofl" "lyon"],
+                 :name "Gulf of Lyon",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Baltic Sea"
+                {:abbreviatons ["bal" "baltic"],
+                 :name "Baltic Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Eastern Mediterranean"
+                {:abbreviatons ["eas" "emed" "east" "eastern" "eastmed" "ems" "eme"],
+                 :name "Eastern Mediterranean",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Smyrna"
+                {:abbreviatons ["smy"],
+                 :name "Smyrna",
+                 :sc-type :diplomacy.game.sc/turkey,
+                 :type :diplomacy.game.movement/land},
+                "Livonia"
+                {:abbreviatons ["lvn" "livo" "lvo" "lva"],
+                 :name "Livonia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Ankara"
+                {:abbreviatons ["ank"],
+                 :name "Ankara",
+                 :sc-type :diplomacy.game.sc/turkey,
+                 :type :diplomacy.game.movement/land},
+                "Tuscany"
+                {:abbreviatons ["tus"],
+                 :name "Tuscany",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Tyrolia"
+                {:abbreviatons ["tyr" "tyl" "trl"],
+                 :name "Tyrolia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Moscow"
+                {:abbreviatons ["mos"],
+                 :name "Moscow",
+                 :sc-type :diplomacy.game.sc/russia,
+                 :type :diplomacy.game.movement/land},
+                "Warsaw"
+                {:abbreviatons ["war"],
+                 :name "Warsaw",
+                 :sc-type :diplomacy.game.sc/russia,
+                 :type :diplomacy.game.movement/land},
+                "Sweden"
+                {:abbreviatons ["swe"],
+                 :name "Sweden",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Ukraine"
+                {:abbreviatons ["ukr"],
+                 :name "Ukraine",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Prussia"
+                {:abbreviatons ["pru"],
+                 :name "Prussia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Belgium"
+                {:abbreviatons ["bel"],
+                 :name "Belgium",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Adriatic Sea"
+                {:abbreviatons ["adr" "adriatic"],
+                 :name "Adriatic Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Edinburgh"
+                {:abbreviatons ["edi"],
+                 :name "Edinburgh",
+                 :sc-type :diplomacy.game.sc/england,
+                 :type :diplomacy.game.movement/land},
+                "Yorkshire"
+                {:abbreviatons ["yor" "york" "yonkers"],
+                 :name "Yorkshire",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Ruhr"
+                {:abbreviatons ["ruh"],
+                 :name "Ruhr",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Burgundy"
+                {:abbreviatons ["bur"],
+                 :name "Burgundy",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Mid Atlantic Ocean"
+                {:abbreviatons ["mao" "midatlanticocean" "midatlantic" "mid" "mat"],
+                 :name "Mid Atlantic Ocean",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Syria"
+                {:abbreviatons ["syr"],
+                 :name "Syria",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Clyde"
+                {:abbreviatons ["cly"],
+                 :name "Clyde",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Constantinople"
+                {:abbreviatons ["con"],
+                 :name "Constantinople",
+                 :sc-type :diplomacy.game.sc/turkey,
+                 :type :diplomacy.game.movement/land},
+                "Berlin"
+                {:abbreviatons ["ber"],
+                 :name "Berlin",
+                 :sc-type :diplomacy.game.sc/germany,
+                 :type :diplomacy.game.movement/land},
+                "Rumania"
+                {:abbreviatons ["rum"],
+                 :name "Rumania",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Tunis"
+                {:abbreviatons ["tun"],
+                 :name "Tunis",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Western Mediterranean"
+                {:abbreviatons ["wes" "wmed" "west" "western" "westmed" "wms" "wme"],
+                 :name "Western Mediterranean",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Greece"
+                {:abbreviatons ["gre"],
+                 :name "Greece",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Wales"
+                {:abbreviatons ["wal"],
+                 :name "Wales",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Budapest"
+                {:abbreviatons ["bud"],
+                 :name "Budapest",
+                 :sc-type :diplomacy.game.sc/austria,
+                 :type :diplomacy.game.movement/land},
+                "Naples"
+                {:abbreviatons ["nap"],
+                 :name "Naples",
+                 :sc-type :diplomacy.game.sc/italy,
+                 :type :diplomacy.game.movement/land},
+                "Skagerrak"
+                {:abbreviatons ["ska"],
+                 :name "Skagerrak",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Piedmont"
+                {:abbreviatons ["pie"],
+                 :name "Piedmont",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Serbia"
+                {:abbreviatons ["ser"],
+                 :name "Serbia",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Gascony"
+                {:abbreviatons ["gas"],
+                 :name "Gascony",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Black Sea"
+                {:abbreviatons ["bla" "black"],
+                 :name "Black Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Armenia"
+                {:abbreviatons ["arm"],
+                 :name "Armenia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Gulf of Bothnia"
+                {:abbreviatons ["bot" "gob" "both" "gulfofb" "bothnia"],
+                 :name "Gulf of Bothnia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "London"
+                {:abbreviatons ["lon"],
+                 :name "London",
+                 :sc-type :diplomacy.game.sc/england,
+                 :type :diplomacy.game.movement/land},
+                "Galicia"
+                {:abbreviatons ["gal"],
+                 :name "Galicia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Silesia"
+                {:abbreviatons ["sil"],
+                 :name "Silesia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Norway"
+                {:abbreviatons ["nor" "nwy" "norw"],
+                 :name "Norway",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Tyrrhenian Sea"
+                {:abbreviatons ["tys" "tyrr" "tyrrhenian" "tyn" "tyh"],
+                 :name "Tyrrhenian Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Trieste"
+                {:abbreviatons ["tri"],
+                 :name "Trieste",
+                 :sc-type :diplomacy.game.sc/austria,
+                 :type :diplomacy.game.movement/land},
+                "Vienna"
+                {:abbreviatons ["vie"],
+                 :name "Vienna",
+                 :sc-type :diplomacy.game.sc/austria,
+                 :type :diplomacy.game.movement/land},
+                "Albania"
+                {:abbreviatons ["alb"],
+                 :name "Albania",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Liverpool"
+                {:abbreviatons ["lvp" "livp" "lpl"],
+                 :name "Liverpool",
+                 :sc-type :diplomacy.game.sc/england,
+                 :type :diplomacy.game.movement/land},
+                "Marseilles"
+                {:abbreviatons ["mar" "mars"],
+                 :name "Marseilles",
+                 :sc-type :diplomacy.game.sc/france,
+                 :type :diplomacy.game.movement/land},
+                "North Sea"
+                {:abbreviatons ["nth" "norsea" "nts"],
+                 :name "North Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Rome"
+                {:abbreviatons ["rom"],
+                 :name "Rome",
+                 :sc-type :diplomacy.game.sc/italy,
+                 :type :diplomacy.game.movement/land},
+                "Finland"
+                {:abbreviatons ["fin"],
+                 :name "Finland",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Helgoland Bight"
+                {:abbreviatons ["hel" "helgoland"],
+                 :name "Helgoland Bight",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Aegean Sea"
+                {:abbreviatons ["aeg" "aegean"],
+                 :name "Aegean Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Paris"
+                {:abbreviatons ["par"],
+                 :name "Paris",
+                 :sc-type :diplomacy.game.sc/france,
+                 :type :diplomacy.game.movement/land},
+                "Denmark"
+                {:abbreviatons ["den"],
+                 :name "Denmark",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Barents Sea"
+                {:abbreviatons ["bar" "barents"],
+                 :name "Barents Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Switzerland"
+                {:abbreviatons ["swi" "switz"],
+                 :name "Switzerland",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Venice"
+                {:abbreviatons ["ven"],
+                 :name "Venice",
+                 :sc-type :diplomacy.game.sc/italy,
+                 :type :diplomacy.game.movement/land},
+                "English Channel"
+                {:abbreviatons ["eng" "english" "channel" "ech"],
+                 :name "English Channel",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Spain"
+                {:abbreviatons ["spa"],
+                 :name "Spain",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Ionian Sea"
+                {:abbreviatons ["ion" "ionian"],
+                 :name "Ionian Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Irish Sea"
+                {:abbreviatons ["iri" "irish"],
+                 :name "Irish Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Norwegian Sea"
+                {:abbreviatons ["nwg" "norwsea" "nrg" "norwegian"],
+                 :name "Norwegian Sea",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "North Atlantic Ocean"
+                {:abbreviatons ["nao" "nat"],
+                 :name "North Atlantic Ocean",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/water},
+                "Holland"
+                {:abbreviatons ["hol"],
+                 :name "Holland",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Sevastopol"
+                {:abbreviatons ["sev" "sevastapol"],
+                 :name "Sevastopol",
+                 :sc-type :diplomacy.game.sc/russia,
+                 :type :diplomacy.game.movement/land},
+                "St Petersburg"
+                {:abbreviatons ["stp"],
+                 :name "St Petersburg",
+                 :sc-type :diplomacy.game.sc/russia,
+                 :type :diplomacy.game.movement/land},
+                "Bulgaria"
+                {:abbreviatons ["bul"],
+                 :name "Bulgaria",
+                 :sc-type :diplomacy.game.sc/independent,
+                 :type :diplomacy.game.movement/land},
+                "Picardy"
+                {:abbreviatons ["pic"],
+                 :name "Picardy",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land},
+                "Bohemia"
+                {:abbreviatons ["boh"],
+                 :name "Bohemia",
+                 :sc-type :diplomacy.game.sc/na,
+                 :type :diplomacy.game.movement/land}})
 
 ;; This is a convenience data structure built from the province map.
 ;; It allows us to do a fast lookup from abbreviations to the
