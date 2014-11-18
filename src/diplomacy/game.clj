@@ -489,21 +489,21 @@
 
 (defn land-locked? [[name data]]
   (case name
-      ("Paris"
-       "Burgundy"
-       "Ruhr"
-       "Munich"
-       "Silesia"
-       "Warsaw"
-       "Moscow"
-       "Ukraine"
-       "Tyrolia"
-       "Bohemia"
-       "Galicia"
-       "Vienna"
-       "Budapest"
-       "Serbia") true
-       false))
+    ("Paris"
+     "Burgundy"
+     "Ruhr"
+     "Munich"
+     "Silesia"
+     "Warsaw"
+     "Moscow"
+     "Ukraine"
+     "Tyrolia"
+     "Bohemia"
+     "Galicia"
+     "Vienna"
+     "Budapest"
+     "Serbia") true
+     false))
 
 (defn coastal? [[name data :as item]]
   (and (= :diplomacy.game.movement/land
