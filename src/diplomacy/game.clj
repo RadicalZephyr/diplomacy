@@ -487,7 +487,7 @@
         (assoc-in [name :type] land-type)
         (assoc-in [name :sc-type] sc-type))))
 
-(defn land-locked? [name]
+(defn land-locked? [[name data]]
   (case name
       ("Paris"
        "Burgundy"
@@ -505,14 +505,14 @@
        "Serbia") true
        false))
 
-(defn coastal? [[name pdata]]
+(defn coastal? [[name data :as item]]
   (and (= :diplomacy.game.movement/land
-          (:type pdata))
-       (not (land-locked? name))))
+          (:type data))
+       (not (land-locked? item))))
 
 (defn mark-coastal [ps]
   (reduce (fn [ps [name data]]
             (assoc-in ps [name :type]
                       :diplomacy.game.movement/coastal))
           ps
-          (filter coastal? provinces)))
+          (filter coastal? ps)))
