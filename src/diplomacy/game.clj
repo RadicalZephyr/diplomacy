@@ -468,14 +468,3 @@
                                :occupied-by ::nothing}))
            {})
    place-starting-pieces))
-
-
-(defn transform-when [pred trans coll]
-  (reduce trans
-          coll
-          (filter pred coll)))
-
-(defn as-sorted-maps [ps]
-  (reduce (fn [b [name data]]
-            (assoc b name (into (sorted-map) data)))
-          {} ps))
