@@ -174,6 +174,8 @@
 
 (build-abbreviations)
 
+;; (keys @abbreviations) gives a seq of all the possible abbreviations
+
 (defn abbrev->area [abbrev]
   (->> abbrev
        (get @abbreviations)
