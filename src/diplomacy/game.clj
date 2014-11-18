@@ -486,3 +486,26 @@
     (-> provinces
         (assoc-in [name :type] land-type)
         (assoc-in [name :sc-type] sc-type))))
+
+(defn land-locked? [name]
+  (case name
+      ("Paris"
+       "Burgundy"
+       "Ruhr"
+       "Munich"
+       "Silesia"
+       "Warsaw"
+       "Moscow"
+       "Ukraine"
+       "Tyrolia"
+       "Bohemia"
+       "Galicia"
+       "Vienna"
+       "Budapest"
+       "Serbia") true
+       false))
+
+(defn coastal? [[name pdata]]
+  (and (= :diplomacy.game.movement/land
+          (:type pdata))
+       (not (land-locked? name))))
