@@ -356,11 +356,6 @@
                  :name "Barents Sea",
                  :sc-type :diplomacy.game.sc/na,
                  :type :diplomacy.game.movement/water},
-                "Switzerland"
-                {:abbreviatons ["swi" "switz"],
-                 :name "Switzerland",
-                 :sc-type :diplomacy.game.sc/na,
-                 :type :diplomacy.game.movement/land},
                 "Venice"
                 {:abbreviatons ["ven"],
                  :name "Venice",
