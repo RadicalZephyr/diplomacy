@@ -234,9 +234,10 @@
   (Unit. type owner))
 
 (defn add-units-for-country [board [country units]]
-  (reduce (fn [board [province type]] (assoc-in board
-                                                [province :occupied-by]
-                                                (Unit. type country)))
+  (reduce (fn [board [province type]]
+            (assoc-in board
+                      [province :occupied-by]
+                      (Unit. type country)))
           board
           units))
 
