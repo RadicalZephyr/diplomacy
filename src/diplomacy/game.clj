@@ -469,65 +469,13 @@
            {})
    place-starting-pieces))
 
-(defn change-types [provinces [name {:keys [type]}]]
-  (let [land-type (case type
-                    :w                           :diplomacy.game.movement/water
-                    (:A :E :F :G :I :R :T :x :l) :diplomacy.game.movement/land)
-        sc-type   (case type
-                    (:l :w) :diplomacy.game.sc/na
-                    :x      :diplomacy.game.sc/independent
-                    :A      :diplomacy.game.sc/austria
-                    :E      :diplomacy.game.sc/england
-                    :F      :diplomacy.game.sc/france
-                    :G      :diplomacy.game.sc/germany
-                    :I      :diplomacy.game.sc/italy
-                    :R      :diplomacy.game.sc/russia
-                    :T      :diplomacy.game.sc/turkey)]
-    (-> provinces
-        (assoc-in [name :type] land-type)
-        (assoc-in [name :sc-type] sc-type))))
 
-(defn land-locked? [[name data]]
-  (case name
-    ("Paris"
-     "Burgundy"
-     "Ruhr"
-     "Munich"
-     "Silesia"
-     "Warsaw"
-     "Moscow"
-     "Ukraine"
-     "Tyrolia"
-     "Bohemia"
-     "Galicia"
-     "Vienna"
-     "Budapest"
-     "Serbia") true
-     false))
 
-(defn coastal? [[name data :as item]]
-  (and (= :diplomacy.game.movement/land
-          (:type data))
-       (not (land-locked? item))))
 
 (defn transform-when [pred trans coll]
   (reduce trans
           coll
           (filter pred coll)))
-
-(defn mark-coastal [ps]
-  (transform-when coastal?
-                  (fn [ps [name data]]
-                    (assoc-in ps [name :type]
-                              :diplomacy.game.movement/coastal))
-                  ps))
-
-(defn remark-landlocked [ps]
-  (transform-when land-locked?
-                  (fn [ps [name data]]
-                    (assoc-in ps [name :type]
-                              :diplomacy.game.movement/inland))
-                  ps))
 
 (defn as-sorted-maps [ps]
   (reduce (fn [b [name data]]
