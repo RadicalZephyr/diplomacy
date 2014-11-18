@@ -12,34 +12,34 @@
 ;;    Supply Centers are on land provinces
 
 ;; Define the starting places/pieces
-(def starting-pieces {:austria {"Vienna"          :army
-                                "Budapest"        :army
-                                "Trieste"         :fleet}
+(def starting-pieces {:austria {"Vienna"          :diplomacy.game.unit/army
+                                "Budapest"        :diplomacy.game.unit/army
+                                "Trieste"         :diplomacy.game.unit/fleet}
 
-                      :england {"London"          :fleet
-                                "Edinburgh"       :fleet
-                                "Liverpool"       :army}
+                      :england {"London"          :diplomacy.game.unit/fleet
+                                "Edinburgh"       :diplomacy.game.unit/fleet
+                                "Liverpool"       :diplomacy.game.unit/army}
 
-                      :france  {"Paris"           :army
-                                "Marseilles"      :army
-                                "Brest"           :fleet}
+                      :france  {"Paris"           :diplomacy.game.unit/army
+                                "Marseilles"      :diplomacy.game.unit/army
+                                "Brest"           :diplomacy.game.unit/fleet}
 
-                      :germany {"Berlin"          :army
-                                "Munich"          :army
-                                "Kiel"            :fleet}
+                      :germany {"Berlin"          :diplomacy.game.unit/army
+                                "Munich"          :diplomacy.game.unit/army
+                                "Kiel"            :diplomacy.game.unit/fleet}
 
-                      :italy   {"Rome"            :army
-                                "Venice"          :army
-                                "Naples"          :fleet}
+                      :italy   {"Rome"            :diplomacy.game.unit/army
+                                "Venice"          :diplomacy.game.unit/army
+                                "Naples"          :diplomacy.game.unit/fleet}
 
-                      :russia  {"Moscow"          :army
-                                "Sevastopol"      :fleet
-                                "Warsaw"          :army
-                                "St Petersburg"   :fleet}
+                      :russia  {"Moscow"          :diplomacy.game.unit/army
+                                "Sevastopol"      :diplomacy.game.unit/fleet
+                                "Warsaw"          :diplomacy.game.unit/army
+                                "St Petersburg"   :diplomacy.game.unit/fleet}
 
-                      :turkey  {"Ankara"          :fleet
-                                "Constantinople"  :army
-                                "Smyrna"          :army}})
+                      :turkey  {"Ankara"          :diplomacy.game.unit/fleet
+                                "Constantinople"  :diplomacy.game.unit/army
+                                "Smyrna"          :diplomacy.game.unit/army}})
 
 
 ;; This is the canonical source of data on the Diplomacy map. The
