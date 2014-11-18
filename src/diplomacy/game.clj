@@ -509,3 +509,10 @@
   (and (= :diplomacy.game.movement/land
           (:type pdata))
        (not (land-locked? name))))
+
+(defn mark-coastal [ps]
+  (reduce (fn [ps [name data]]
+            (assoc-in ps [name :type]
+                      :diplomacy.game.movement/coastal))
+          ps
+          (filter coastal? provinces)))
