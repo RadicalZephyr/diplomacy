@@ -510,16 +510,21 @@
           (:type data))
        (not (land-locked? item))))
 
+(defn transform-when [pred trans coll]
+  (reduce trans
+          coll
+          (filter pred coll)))
+
 (defn mark-coastal [ps]
-  (reduce (fn [ps [name data]]
-            (assoc-in ps [name :type]
-                      :diplomacy.game.movement/coastal))
-          ps
-          (filter coastal? ps)))
+  (transform-when coastal?
+                  (fn [ps [name data]]
+                    (assoc-in ps [name :type]
+                              :diplomacy.game.movement/coastal))
+                  ps))
 
 (defn remark-landlocked [ps]
-  (reduce (fn [ps [name data]]
-            (assoc-in ps [name :type]
-                      :diplomacy.game.movement/inland))
-          ps
-          (filter land-locked? ps)))
+  (transform-when land-locked?
+                  (fn [ps [name data]]
+                    (assoc-in ps [name :type]
+                              :diplomacy.game.movement/inland))
+                  ps))
