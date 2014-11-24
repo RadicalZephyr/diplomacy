@@ -173,6 +173,15 @@
               :else checked?)
         checked?))))
 
+(defn get-area-subimage [img points]
+  (let [xs (map first points)
+        ys (map second points)
+        x-min (apply min xs)
+        x-max (apply max xs)
+        y-min (apply min ys)
+        y-max (apply max ys)]
+    (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min))))
+
 (defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
   `(let ~let-vec
      (try
