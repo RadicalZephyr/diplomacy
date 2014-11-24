@@ -7,7 +7,9 @@
                            IIOImage)
             java.awt.Color
             java.awt.color.ColorSpace
-            (java.awt.image ByteLookupTable
+            java.awt.geom.AffineTransform
+            (java.awt.image AffineTransformOp
+                            ByteLookupTable
                             ColorConvertOp
                             LookupOp
                             PixelGrabber)))
@@ -55,13 +57,20 @@
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
 
+(defn make-scale-op [scale]
+  (let [scale (float scale)
+        aft (AffineTransform.)]
+    (.scale aft scale scale)
+    (AffineTransformOp. aft AffineTransformOp/TYPE_BILINEAR)))
+
 ;; Create a ColorConvertOp to transform to grayscale
 (def filter-ops
   [(ColorConvertOp. (ColorSpace/getInstance
                      ColorSpace/CS_GRAY)
                     nil)
    (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
-              nil)])
+              nil)
+   (make-scale-op 0.5)])
 
 (defn grab-pixels [img [x y] [w h]]
   (let [px (int-array (* w h))
