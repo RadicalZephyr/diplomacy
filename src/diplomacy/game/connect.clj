@@ -45,15 +45,15 @@
          pts  (for [x (range max-x)
                     y (range max-y)]
                 [x y])]
-    (cond
-     (seq pts) (let [pt (first pts)]
-                 (if (= (get2d rgbs pt)
-                        -1)
-                   (do (swap! label inc)
-                       (recur (search rgbs @label pt)
-                              (rest pts)))
-                   (recur rgbs (rest pts))))
-     :else rgbs)))
+    (if (seq pts)
+      (let [pt (first pts)]
+        (if (= (get2d rgbs pt)
+               -1)
+          (do (swap! label inc)
+              (recur (search rgbs @label pt)
+                     (rest pts)))
+          (recur rgbs (rest pts))))
+      rgbs)))
 
 (defn connected-components [rgbs w h]
   (binding [max-x w
