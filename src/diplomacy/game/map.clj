@@ -220,6 +220,24 @@
             (.clearRect gfx x y 1 1))
           points))))
 
+(defn rgb->image [img rgb]
+  (let [img-w (.getWidth  img)
+        img-h (.getHeight img)
+        nimg (BufferedImage. img-w img-h BufferedImage/TYPE_INT_RGB)]
+    (dorun
+     (for [x (range img-w)
+           y (range img-h)
+           :let [c (Color. (cn/get2d rgb [x y]))]]
+       (.setRGB img x y c)))
+    nimg))
+
+(defn connected-image [img]
+  (let [rgb (get-all-rgb fimg)
+        img-w (.getWidth  img)
+        img-h (.getHeight img)
+        nrgb (cn/connected-components rgb img-w img-h)]
+    (rgb->image img nrgb)))
+
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
@@ -255,21 +273,3 @@
               (get-canvas))
 
   (def corners (get-all-corners (w-by-h img [3 3]))))
-
-(defn rgb->image [img rgb]
-  (let [img-w (.getWidth  img)
-        img-h (.getHeight img)
-        nimg (BufferedImage. img-w img-h BufferedImage/TYPE_INT_RGB)]
-    (dorun
-     (for [x (range img-w)
-           y (range img-h)
-           :let [c (Color. (cn/get2d rgb [x y]))]]
-       (.setRGB img x y c)))
-    nimg))
-
-(defn connected-image [img]
-  (let [rgb (get-all-rgb fimg)
-        img-w (.getWidth  img)
-        img-h (.getHeight img)
-        nrgb (cn/connected-components rgb img-w img-h)]
-    (rgb->image img nrgb)))
