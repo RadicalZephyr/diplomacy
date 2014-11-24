@@ -70,5 +70,7 @@
     (.clearRect gfx 396 3 357 70)
     (.clearRect gfx 394 3 1 70))
   (-main)
-  (draw-image img
+  (draw-image (reduce (fn [img op]
+                        (.filter op img nil))
+                      img filter-ops)
               (get-canvas)))
