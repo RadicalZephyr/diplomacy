@@ -4,11 +4,13 @@
 
 (def ^:dynamic max-y)
 
-(defn get2d [coll [x y]])
+(defn get2d [coll [x y]]
+  (get coll (+ (* y max-x)
+               x)))
 
 (defn assoc2d [coll [x y]]
-  (assoc (+ (* y max-x)
-            x)))
+  (assoc coll (+ (* y max-x)
+                 x)))
 
 (defn bounded-neighbours [[x y]]
   (into #{}
