@@ -50,3 +50,7 @@
     (let [label (atom 1)
           rgbs  (atom rgbs)]
      (find-components rgbs label))))
+
+(def test-grid [-1 -1 0 -1 -1 -1
+                -1 -1 0 -1 0 0
+                -1 -1 -1 -1 0 0])
