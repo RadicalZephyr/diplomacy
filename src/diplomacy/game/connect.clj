@@ -26,29 +26,29 @@
           [(+ dx x) (+ dy y)])))
 
 (defn search [rgbs label pt]
-  (swap! rgbs assoc2d label pt)
-  (->> pt
-       bounded-neighbours
-       (map (fn [pt]
-              (when (= (get2d @rgbs pt)
-                       -1)
-                (search rgbs label pt))))
-       dorun))
+  (loop [rgbs (assoc2d rgbs label pt)
+         pts (bounded-neighbours pt)]
+    (let [pt (get pts 1)]
+      (if (and pt
+               (= (get2d rgbs pt)
+                  -1))
+        (recur (search rgbs label pt)
+               (disj pts pt))
+        rgbs))))
 
 (defn find-components [rgbs label]
   (for [x (range max-x)
         y (range max-y)
         :let [pt [x y]]]
-    (when (= (get2d @rgbs pt)
+    (when (= (get2d rgbs pt)
            -1)
       (swap! label inc)
-      (swap! rgbs search label pt))))
+      (search rgbs label pt))))
 
 (defn connected-components [rgbs w h]
   (binding [max-x w
             max-y h]
-    (let [label (atom 1)
-          rgbs  (atom rgbs)]
+    (let [label (atom 1)]
      (find-components rgbs label))))
 
 (def test-grid [-1 -1 0 -1 -1 -1
