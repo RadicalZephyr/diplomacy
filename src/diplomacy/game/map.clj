@@ -186,10 +186,12 @@
         x-max (apply max xs)
         y-min (apply min ys)
         y-max (apply max ys)]
-    (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min))))
+    (when (and (> x-max x-min)
+               (> y-max y-min))
+     (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min)))))
 
 (defn corner->subimage [img {:keys [x y]}]
-  (->> [x y]
+  (->> [(inc x) (inc y)]
        (get-all-contiguous-pixels img)
        (get-area-subimage img)))
 
