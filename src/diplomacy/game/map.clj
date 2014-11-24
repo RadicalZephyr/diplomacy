@@ -33,8 +33,17 @@
 (defn get-canvas []
   (s/select @root [:#canvas]))
 
-(defn -main [& args]
+(defn show-frame [frame]
   (s/invoke-later
-   (-> @root
-    s/pack!
-    s/show!)))
+   (-> frame
+       s/pack!
+       s/show!)))
+
+(defn -main [& args]
+  (show-frame @root))
+
+(do
+  (def f (io/file "resources" "diplo-map-simple.gif"))
+  (def img  (file->image f))
+  (-main)
+  (draw-image img (get-canvas)))
