@@ -85,23 +85,21 @@
           y (range (- img-h h))]
       {:x x :y y :pixels (grab-pixels img [x y] [w h])})))
 
-(def outside-corner-patterns {[-16777216 -16777216 -16777216 -1] :tlo
-                              [-16777216 -16777216 -1 -16777216] :tro
-                              [-16777216 -1 -16777216 -16777216] :blo
-                              [-1 -16777216 -16777216 -16777216] :bro})
+(def corner-patterns {[-16777216 -16777216 -16777216 -1] :tlo
+                      [-16777216 -16777216 -1 -16777216] :tro
+                      [-16777216 -1 -16777216 -16777216] :blo
+                      [-1 -16777216 -16777216 -16777216] :bro
+                      [-16777216 -1 -1 -1] :tli
+                      [-1 -16777216 -1 -1] :tri
+                      [-1 -1 -16777216 -1] :bli
+                      [-1 -1 -1 -16777216] :bri})
 
-(def inside-corner-patterns {[-16777216 -1 -1 -1] :tli
-                             [-1 -16777216 -1 -1] :tri
-                             [-1 -1 -16777216 -1] :bli
-                             [-1 -1 -1 -16777216] :bri})
 
 (defn corner? [{pxs :pixels}]
-  (or (outside-corner-patterns pxs)
-      (inside-corner-patterns  pxs)))
+  (corner-patterns pxs))
 
 (defn to-corner [{:keys [x y pixels] :as m}]
-  (assoc m :corner (or (outside-corner-patterns pixels)
-                       (inside-corner-patterns  pixels))))
+  (assoc m :corner (corner-patterns pixels)))
 
 (defn classify-all-pixels [img]
   (let [w 2 h 2
@@ -110,8 +108,7 @@
     (for [x (range (- img-w w))
           y (range (- img-h h))
           :let [pxs (grab-pixels img [x y] [w h])
-                id (or (outside-corner-patterns pxs)
-                       (inside-corner-patterns  pxs))]
+                id (corner-patterns pxs)]
           :when id]
       {:x x :y y :type id})))
 
