@@ -5,6 +5,7 @@
   (:import  (javax.imageio ImageIO
                            ImageReader
                            IIOImage)
+            java.awt.Color
             java.awt.color.ColorSpace
             (java.awt.image ByteLookupTable
                             ColorConvertOp
@@ -64,6 +65,9 @@
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
   (def img  (file->image f))
+  (let [gfx (.createGraphics img)]
+    (.setBackground gfx Color/WHITE)
+    (.clearRect gfx 395 0 365 73))
   (-main)
   (draw-image img
               (get-canvas)))
