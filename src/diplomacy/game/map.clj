@@ -148,6 +148,32 @@
       (filter corner?)
       (map to-corner)))
 
+(defn get-all-contiguous-pixels [img [x y]]
+  (let [rgbs (get-all-rgb img)
+        get-xy (make-get-xy img)
+        val (get-xy rgbs [x y])
+        img-w (.getWidth  img)
+        img-h (.getHeight img)]
+    (loop [x x
+           y y
+           checked? #{}]
+      (if-not (checked? [x y])
+        (cond (= val (get-xy rgbs [(inc x) y]))
+              (recur (inc x) y (conj checked? [x y]))
+
+              (= val (get-xy rgbs [x (inc y)]))
+              (recur x (inc y) (conj checked? [x y]))
+
+              (= val (get-xy rgbs [(dec x) y]))
+              (recur (dec x) y (conj checked? [x y]))
+
+              (= val (get-xy rgbs [x (dec y)]))
+              (recur  x (dec y) (conj checked? [x y]))
+
+              :else checked?)
+        checked?))))
+
+
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
