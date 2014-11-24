@@ -29,13 +29,15 @@
 (defn search [rgbs label pt]
   (loop [rgbs (assoc2d rgbs label pt)
          pts (bounded-neighbours pt)]
-    (let [pt (get pts 1)]
-      (if (and pt
-               (= (get2d rgbs pt)
-                  -1))
-        (recur (search rgbs label pt)
-               (disj pts pt))
-        rgbs))))
+    (if (seq pts)
+      (let [pt (first pts)]
+        (if (= (get2d rgbs pt)
+               -1)
+          (recur (search rgbs label pt)
+                 (rest pts))
+          (recur rgbs
+                 (rest pts))))
+      rgbs)))
 
 (defn find-components [rgbs label]
   (loop [rgbs rgbs
