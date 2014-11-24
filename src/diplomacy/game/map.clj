@@ -1,5 +1,7 @@
 (ns diplomacy.game.map
-  (:require [clojure.java.io :as io])
+  (:require [clojure.java.io :as io]
+            [seesaw.core :as s]
+            [seesaw.graphics :as g])
   (:import  (javax.imageio ImageIO
                            ImageReader
                            IIOImage)))
@@ -17,3 +19,13 @@
   (fn [x] (if (< cutoff)
             0
             127)))
+
+(defn -main [& args]
+  (s/invoke-later
+   (->
+    (s/frame :title "Images!!"
+             :on-close :dispose
+             :size [640 :by 480]
+             :content (s/canvas :id :canvas))
+    s/pack!
+    s/show!)))
