@@ -25,9 +25,15 @@
                          (> max-y ny -1))]
           [(+ dx x) (+ dy y)])))
 
-(defn search [rgbs label [x y]]
-  (let [rgbs ()])
-  )
+(defn search [rgbs label pt]
+  (swap! rgbs assoc2d label pt)
+  (->> pt
+       bounded-neighbours
+       (map (fn [pt]
+              (when (= (get2d @rgbs pt)
+                       -1)
+                (search rgbs label pt))))
+       dorun))
 
 (defn find-components [rgbs label]
   (for [x (range max-x)
