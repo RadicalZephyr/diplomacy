@@ -1,5 +1,6 @@
 (ns diplomacy.game.map
-  (:require [clojure.java.io :as io]
+  (:require [diplomacy.game.connect :as cn]
+            [clojure.java.io :as io]
             [seesaw.core :as s]
             [seesaw.graphics :as g])
   (:import  (javax.imageio ImageIO
@@ -9,6 +10,7 @@
             java.awt.color.ColorSpace
             java.awt.geom.AffineTransform
             (java.awt.image AffineTransformOp
+                            BufferedImage
                             ByteLookupTable
                             ColorConvertOp
                             LookupOp
@@ -253,3 +255,14 @@
               (get-canvas))
 
   (def corners (get-all-corners (w-by-h img [3 3]))))
+
+(defn rgb->image [img rgb]
+  (let [img-w (.getWidth  img)
+        img-h (.getHeight img)
+        nimg (BufferedImage. img-w img-h BufferedImage/TYPE_INT_RGB)]
+    (dorun
+     (for [x (range img-w)
+           y (range img-h)
+           :let [c (Color. (cn/get2d rgb [x y]))]]
+       (.setRGB img x y c)))
+    nimg))
