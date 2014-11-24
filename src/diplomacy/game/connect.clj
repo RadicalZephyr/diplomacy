@@ -15,17 +15,16 @@
     val))
 
 (defn bounded-neighbours [[x y]]
-  (into #{}
-        (for [dx [-1 0 1]
-              dy [-1 0 1]
-              :let [nx (+ dx x)
-                    ny (+ dy y)]
-              :when (and (or (= dx 0)
-                             (= dy 0))
-                         (not= 0 dx dy)
-                         (> max-x nx -1)
-                         (> max-y ny -1))]
-          [(+ dx x) (+ dy y)])))
+  (for [dx [-1 0 1]
+        dy [-1 0 1]
+        :let [nx (+ dx x)
+              ny (+ dy y)]
+        :when (and (or (= dx 0)
+                       (= dy 0))
+                   (not= 0 dx dy)
+                   (> max-x nx -1)
+                   (> max-y ny -1))]
+    [(+ dx x) (+ dy y)]))
 
 (defn search [rgbs label pt]
   (loop [rgbs (assoc2d rgbs label pt)
