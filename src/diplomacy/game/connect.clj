@@ -23,19 +23,22 @@
                          (> max-y ny -1))]
           [(+ dx x) (+ dy y)])))
 
-(defn find-components [rgbs label]
-  (for [x (range max-x)
-        y (range max-y)]
-    (if )
-    )
-  )
-
-(defn search [rgbs label x y]
+(defn search [rgbs label [x y]]
   (let [rgbs ()])
   )
+
+(defn find-components [rgbs label]
+  (for [x (range max-x)
+        y (range max-y)
+        :let [pt [x y]]]
+    (when (= (get2d @rgbs pt)
+           -1)
+      (swap! label inc)
+      (swap! rgbs search label pt))))
 
 (defn connected-components [rgbs w h]
   (binding [max-x w
             max-y h]
-   (let [label (atom 1)]
+    (let [label (atom 1)
+          rgbs  (atom rgbs)]
      (find-components rgbs label w h))))
