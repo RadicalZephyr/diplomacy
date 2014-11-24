@@ -25,10 +25,10 @@
                     :minimum-size [755 :by 777]
                     :content (s/canvas :id :canvas))))
 
-(defn draw-image [buffered-image canvas]
+(defn draw-image [buffered-image canvas & {:keys [op]}]
   (s/config! canvas :paint
              (fn [c g]
-               (.drawImage g buffered-image nil 0 0))))
+               (.drawImage g buffered-image op 0 0))))
 
 (defn get-canvas []
   (s/select @root [:#canvas]))
