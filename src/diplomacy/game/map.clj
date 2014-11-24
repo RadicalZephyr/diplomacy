@@ -246,10 +246,10 @@
     (.clearRect gfx 396 3 357 70)
     (.clearRect gfx 394 3 1 70))
   (-main)
-  (def img (reduce (fn [img op]
+  (def fimg (reduce (fn [img op]
                      (.filter op img nil))
                    img filter-ops))
-  (draw-image img
+  (draw-image fimg
               (get-canvas))
 
   (def corners (get-all-corners (w-by-h img [3 3]))))
