@@ -79,6 +79,18 @@
                              [-1 -1 -16777216 -1] :bli
                              [-1 -1 -1 -16777216] :bri})
 
+(defn classify-all-pixels [img]
+  (let [w 2 h 2
+        img-w (.getWidth img)
+        img-h (.getHeight img)]
+    (for [x (range (- img-w w))
+          y (range (- img-h h))
+          :let [pxs (grab-pixels img [x y] [w h])
+                id (or (outside-corner-patterns pxs)
+                       (inside-corner-patterns  pxs))]
+          :when id]
+      {:x x :y y :type id})))
+
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
   (def img  (file->image f))
