@@ -49,4 +49,4 @@
             max-y h]
     (let [label (atom 1)
           rgbs  (atom rgbs)]
-     (find-components rgbs label w h))))
+     (find-components rgbs label))))
