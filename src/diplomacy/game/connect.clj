@@ -58,7 +58,7 @@
 (defn connected-components [rgbs w h]
   (binding [max-x w
             max-y h]
-    (let [label (atom 1)]
+    (let [label (atom 0)]
      (find-components rgbs label))))
 
 (def test-grid [-1 -1 0 -1 -1 -1
