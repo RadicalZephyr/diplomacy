@@ -143,8 +143,8 @@
                                 dy (range h)]
                             [(+ x dx) (+ y dy)])))})))
 
-(defn get-all-corners [quads]
-  (->> quads
+(defn get-all-corners [grids]
+  (->> grids
       (filter corner?)
       (map to-corner)))
 
@@ -180,4 +180,6 @@
                      (.filter op img nil))
                    img filter-ops))
   (draw-image img
-              (get-canvas)))
+              (get-canvas))
+
+  (def corners (get-all-corners (w-by-h img [3 3]))))
