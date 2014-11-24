@@ -117,6 +117,11 @@
                 (get-xy rgbs [     x  (inc y)])
                 (get-xy rgbs [(inc x) (inc y)])]})))
 
+(defn get-all-corners [quads]
+  (->> quads
+      (filter corner?)
+      (map to-corner)))
+
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
