@@ -78,6 +78,13 @@
     (if (.grabPixels pg)
       (into [] px))))
 
+(defn grab-all-pixels [img [w h]]
+  (let [img-w (.getWidth img)
+        img-h (.getHeight img)]
+    (for [x (range (- img-w w))
+          y (range (- img-h h))]
+      {:x x :y y :pixels (grab-pixels img [x y] [w h])})))
+
 (def outside-corner-patterns {[-16777216 -16777216 -16777216 -1] :tlo
                               [-16777216 -16777216 -1 -16777216] :tro
                               [-16777216 -1 -16777216 -16777216] :blo
