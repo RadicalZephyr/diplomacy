@@ -98,6 +98,12 @@
         img-h (.getHeight img)]
     (into [] (.getRGB img 0 0 img-w img-h nil 0 img-w))))
 
+(defn make-get-xy [img]
+  (let [img-w (.getWidth  img)]
+    (fn [coll [x y]]
+      (get coll (+ img-w
+                   (* y img-w))))))
+
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
