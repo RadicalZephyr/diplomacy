@@ -20,12 +20,22 @@
             0
             127)))
 
+(def root (atom
+           (s/frame :title "Images!!"
+                    :on-close :dispose
+                    :size [640 :by 480]
+                    :content (s/canvas :id :canvas))))
+
+(defn draw-image [buffered-image canvas]
+  (s/config! canvas :paint
+             (fn [c g]
+               (.drawImage g buffered-image nil 0 0))))
+
+(defn get-canvas []
+  (s/select @root [:#canvas]))
+
 (defn -main [& args]
   (s/invoke-later
-   (->
-    (s/frame :title "Images!!"
-             :on-close :dispose
-             :size [640 :by 480]
-             :content (s/canvas :id :canvas))
+   (-> @root
     s/pack!
     s/show!)))
