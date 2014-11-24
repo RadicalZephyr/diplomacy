@@ -53,27 +53,6 @@
                              :content (s/canvas :id :canvas)))
   (show-frame @root))
 
-(defn threshold-table [threshold]
-  (byte-array (map (fn [x] (if (< x threshold) 0 255))
-                   (range 256))))
-
-(defn make-scale-op [scale]
-  (let [scale (float scale)
-        aft (AffineTransform.)]
-    (.scale aft scale scale)
-    (AffineTransformOp. aft AffineTransformOp/TYPE_BILINEAR)))
-
-;; Create a ColorConvertOp to transform to grayscale
-(def filter-ops
-  [(ColorConvertOp. (ColorSpace/getInstance
-                     ColorSpace/CS_GRAY)
-                    nil)
-   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
-              nil)
-   (make-scale-op 0.5)
-   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
-              nil)])
-
 (defn grab-pixels [img [x y] [w h]]
   (let [px (int-array (* w h))
         pg (PixelGrabber. img x y w h px 0 w)]
@@ -113,6 +92,26 @@
                 id (corner-patterns pxs)]
           :when id]
       {:x x :y y :type id})))
+
+(defn threshold-table [threshold]
+  (byte-array (map (fn [x] (if (< x threshold) 0 255))
+                   (range 256))))
+
+(defn make-scale-op [scale]
+  (let [scale (float scale)
+        aft (AffineTransform.)]
+    (.scale aft scale scale)
+    (AffineTransformOp. aft AffineTransformOp/TYPE_BILINEAR)))
+
+(def filter-ops
+  [(ColorConvertOp. (ColorSpace/getInstance
+                     ColorSpace/CS_GRAY)
+                    nil)
+   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
+              nil)
+   (make-scale-op 0.5)
+   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
+              nil)])
 
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
