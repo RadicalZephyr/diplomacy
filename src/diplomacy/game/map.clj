@@ -95,6 +95,14 @@
                              [-1 -1 -16777216 -1] :bli
                              [-1 -1 -1 -16777216] :bri})
 
+(defn corner? [{pxs :pixels}]
+  (or (outside-corner-patterns pxs)
+      (inside-corner-patterns  pxs)))
+
+(defn to-corner [{:keys [x y pixels] :as m}]
+  (assoc m :corner (or (outside-corner-patterns pixels)
+                       (inside-corner-patterns  pixels))))
+
 (defn classify-all-pixels [img]
   (let [w 2 h 2
         img-w (.getWidth img)
