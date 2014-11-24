@@ -4,7 +4,11 @@
             [seesaw.graphics :as g])
   (:import  (javax.imageio ImageIO
                            ImageReader
-                           IIOImage)))
+                           IIOImage)
+            java.awt.color.ColorSpace
+            (java.awt.image ByteLookupTable
+                            ColorConvertOp
+                            LookupOp)))
 
 (defn file->image [filename]
   (with-open [istream (ImageIO/createImageInputStream filename)]
@@ -15,15 +19,7 @@
          (.setInput reader istream true)
          (.read reader 0))))))
 
-(defn threshold [cutoff]
-  (fn [x] (if (< cutoff)
-            0
-            127)))
-
-(def root (atom
-           (s/frame :title "Images!!"
-                    :minimum-size [755 :by 777]
-                    :content (s/canvas :id :canvas))))
+(def root (atom nil))
 
 (defn draw-image [buffered-image canvas & {:keys [op]}]
   (s/config! canvas :paint
@@ -40,10 +36,28 @@
        s/show!)))
 
 (defn -main [& args]
+  (compare-and-set! root
+                    nil
+                    (s/frame :title "Images!!"
+                             :minimum-size [755 :by 777]
+                             :content (s/canvas :id :canvas)))
   (show-frame @root))
+
+(defn threshold-table [threshold]
+  (byte-array (map (fn [x] (if (< x threshold) 0 255))
+                   (range 256))))
+
+;; Create a ColorConvertOp to transform to grayscale
+(def filter-ops
+  [(ColorConvertOp. (ColorSpace/getInstance
+                     ColorSpace/CS_GRAY)
+                    nil)
+   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
+              nil)])
 
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
   (def img  (file->image f))
   (-main)
-  (draw-image img (get-canvas)))
+  (draw-image img
+              (get-canvas)))
