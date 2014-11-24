@@ -173,6 +173,12 @@
               :else checked?)
         checked?))))
 
+(defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
+  `(let ~let-vec
+     (try
+       ~@forms
+       (finally (~close-fn ~binding)))))
+
 
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
@@ -197,7 +203,7 @@
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
   (def img  (file->image f))
-  (let [gfx (.createGraphics img)]
+  (with-cleanup [gfx (.createGraphics img)] .dispose
     (.setBackground gfx Color/WHITE)
     (.clearRect gfx 396 3 357 70)
     (.clearRect gfx 394 3 1 70))
