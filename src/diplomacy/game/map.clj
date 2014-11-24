@@ -49,7 +49,7 @@
   (compare-and-set! root
                     nil
                     (s/frame :title "Images!!"
-                             :minimum-size [755 :by 777]
+                             :minimum-size [385 :by 410]
                              :content (s/canvas :id :canvas)))
   (show-frame @root))
 
