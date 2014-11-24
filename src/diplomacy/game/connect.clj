@@ -49,7 +49,7 @@
                  (if (= (get2d rgbs pt)
                         -1)
                    (do (swap! label inc)
-                       (recur (search rgbs label pt)
+                       (recur (search rgbs @label pt)
                               (rest pts)))
                    (recur rgbs (rest pts))))
      :else rgbs)))
