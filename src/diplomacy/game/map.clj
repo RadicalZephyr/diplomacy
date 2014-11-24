@@ -188,6 +188,11 @@
         y-max (apply max ys)]
     (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min))))
 
+(defn corner->subimage [img {:keys [x y]}]
+  (->> [x y]
+       (get-all-contiguous-pixels img)
+       (get-area-subimage img)))
+
 (defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
   `(let ~let-vec
      (try
