@@ -1,29 +1,33 @@
 (ns diplomacy.game.connect)
 
-(def ^:dynamic assoc2d)
+(def ^:dynamic max-x)
 
-(def ^:dynamic neighbours)
+(def ^:dynamic max-y)
 
-(defn mk-assoc2d [xbound ybound]
-  (fn [coll [x y]]
-    (assoc (+ (* y xbound)
-              x))))
+(defn get2d [coll [x y]])
 
-(defn mk-bounded-neighbours [xbound ybound]
-  (fn [[x y]]
-    (into #{}
-          (for [dx [-1 0 1]
-                dy [-1 0 1]
-                :let [nx (+ dx x)
-                      ny (+ dy y)]
-                :when (and (or (= dx 0)
-                               (= dy 0))
-                           (not= 0 dx dy)
-                           (>= xbound nx 0)
-                           (>= ybound ny 0))]
-            [(+ dx x) (+ dy y)]))))
+(defn assoc2d [coll [x y]]
+  (assoc (+ (* y max-x)
+            x)))
 
-(defn find-components [rgbs]
+(defn bounded-neighbours [[x y]]
+  (into #{}
+        (for [dx [-1 0 1]
+              dy [-1 0 1]
+              :let [nx (+ dx x)
+                    ny (+ dy y)]
+              :when (and (or (= dx 0)
+                             (= dy 0))
+                         (not= 0 dx dy)
+                         (> max-x nx -1)
+                         (> max-y ny -1))]
+          [(+ dx x) (+ dy y)])))
+
+(defn find-components [rgbs label]
+  (for [x (range max-x)
+        y (range max-y)]
+    (if )
+    )
   )
 
 (defn search [rgbs label x y]
@@ -31,7 +35,7 @@
   )
 
 (defn connected-components [rgbs w h]
-  (binding [assoc2d    (mk-assoc2d w h)
-            neighbours (mk-bounded-neighbours w h)]
+  (binding [max-x w
+            max-y h]
    (let [label (atom 1)]
-     (find-components rgbs label))))
+     (find-components rgbs label w h))))
