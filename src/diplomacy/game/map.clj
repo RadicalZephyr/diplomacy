@@ -266,3 +266,10 @@
            :let [c (Color. (cn/get2d rgb [x y]))]]
        (.setRGB img x y c)))
     nimg))
+
+(defn connected-image [img]
+  (let [rgb (get-all-rgb fimg)
+        img-w (.getWidth  img)
+        img-h (.getHeight img)
+        nrgb (cn/connected-components rgb img-w img-h)]
+    (rgb->image img nrgb)))
