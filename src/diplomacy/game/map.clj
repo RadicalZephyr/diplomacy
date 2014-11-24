@@ -22,8 +22,7 @@
 
 (def root (atom
            (s/frame :title "Images!!"
-                    :on-close :dispose
-                    :size [640 :by 480]
+                    :minimum-size [755 :by 777]
                     :content (s/canvas :id :canvas))))
 
 (defn draw-image [buffered-image canvas]
