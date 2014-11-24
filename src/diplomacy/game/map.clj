@@ -69,6 +69,16 @@
     (if (.grabPixels pg)
       (into [] px))))
 
+(def outside-corner-patterns {[-16777216 -16777216 -16777216 -1] :tlo
+                              [-16777216 -16777216 -1 -16777216] :tro
+                              [-16777216 -1 -16777216 -16777216] :blo
+                              [-1 -16777216 -16777216 -16777216] :bro})
+
+(def inside-corner-patterns {[-16777216 -1 -1 -1] :tli
+                             [-1 -16777216 -1 -1] :tri
+                             [-1 -1 -16777216 -1] :bli
+                             [-1 -1 -1 -16777216] :bri})
+
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
   (def img  (file->image f))
