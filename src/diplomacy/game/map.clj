@@ -104,18 +104,19 @@
       (get coll (+ x
                    (* y img-w))))))
 
-(defn by-quads [img]
+(defn w-by-h [img [w h]]
   (let [rgbs (get-all-rgb img)
         get-xy (make-get-xy img)
         img-w (.getWidth  img)
         img-h (.getHeight img)]
-    (for [x (range (- img-w 2))
-          y (range (- img-h 2))]
+    (for [x (range (- img-w w))
+          y (range (- img-h h))]
       {:x x :y y
-       :pixels [(get-xy rgbs [     x       y])
-                (get-xy rgbs [(inc x)      y])
-                (get-xy rgbs [     x  (inc y)])
-                (get-xy rgbs [(inc x) (inc y)])]})))
+       :pixels (into []
+                     (map (partial get-xy rgbs)
+                          (for [dx (range w)
+                                dy (range h)]
+                            [(+ x dx) (+ y dy)])))})))
 
 (defn get-all-corners [quads]
   (->> quads
