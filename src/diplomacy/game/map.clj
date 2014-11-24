@@ -26,6 +26,12 @@
              (fn [c g]
                (.drawImage g buffered-image op 0 0))))
 
+(defn draw-image-rect [img canvas rect]
+  (s/config! canvas :paint
+             (fn [c g]
+               (.drawImage g img nil 0 0)
+               (.fill g rect))))
+
 (defn get-canvas []
   (s/select @root [:#canvas]))
 
