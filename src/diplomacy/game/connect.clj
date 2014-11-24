@@ -27,7 +27,7 @@
     [(+ dx x) (+ dy y)]))
 
 (defn search [rgbs label pt]
-  (loop [rgbs (assoc2d rgbs label pt)
+  (loop [rgbs (assoc2d rgbs pt label)
          pts (bounded-neighbours pt)]
     (if (seq pts)
       (let [pt (first pts)]
