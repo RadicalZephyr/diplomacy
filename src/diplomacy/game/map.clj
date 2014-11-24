@@ -158,19 +158,25 @@
            y y
            checked? #{}]
       (if-not (checked? [x y])
-        (cond (= val (get-xy rgbs [(inc x) y]))
-              (recur (inc x) y (conj checked? [x y]))
+        (let [valid-move?
+              (fn [pt]
+                (and (not (checked? pt))
+                     (= val (get-xy rgbs pt))))]
 
-              (= val (get-xy rgbs [x (inc y)]))
-              (recur x (inc y) (conj checked? [x y]))
+          (cond
+           (valid-move? [(inc x) y])
+           (recur (inc x) y (conj checked? [x y]))
 
-              (= val (get-xy rgbs [(dec x) y]))
-              (recur (dec x) y (conj checked? [x y]))
+           (valid-move? [x (inc y)])
+           (recur x (inc y) (conj checked? [x y]))
 
-              (= val (get-xy rgbs [x (dec y)]))
-              (recur  x (dec y) (conj checked? [x y]))
+           (valid-move? [(dec x) y])
+           (recur (dec x) y (conj checked? [x y]))
 
-              :else checked?)
+           (valid-move? [x (dec y)])
+           (recur  x (dec y) (conj checked? [x y]))
+
+               :else checked?))
         checked?))))
 
 (defn get-area-subimage [img points]
