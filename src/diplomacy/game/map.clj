@@ -100,6 +100,15 @@
                           -1 -1 -1
                           -1 -1 -16777216] :bri})
 
+(def corner->point {:tlo (fn [x y] [(inc x) (inc y)])
+                    :tro (fn [x y] [(dec x) (inc y)])
+                    :blo (fn [x y] [(inc x) (dec y)])
+                    :bro (fn [x y] [(dec x) (dec y)])
+                    :tli (fn [x y] [(inc x) (inc y)])
+                    :tri (fn [x y] [(dec x) (inc y)])
+                    :bli (fn [x y] [(inc x) (dec y)])
+                    :bri (fn [x y] [(dec x) (dec y)])
+                    })
 
 (defn corner? [{pxs :pixels}]
   (corner-patterns-3x pxs))
