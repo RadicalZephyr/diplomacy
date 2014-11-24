@@ -9,7 +9,8 @@
             java.awt.color.ColorSpace
             (java.awt.image ByteLookupTable
                             ColorConvertOp
-                            LookupOp)))
+                            LookupOp
+                            PixelGrabber)))
 
 (defn file->image [filename]
   (with-open [istream (ImageIO/createImageInputStream filename)]
@@ -61,6 +62,12 @@
                     nil)
    (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
               nil)])
+
+(defn grab-pixels [img [x y] [w h]]
+  (let [px (int-array (* w h))
+        pg (PixelGrabber. img x y w h px 0 w)]
+    (if (.grabPixels pg)
+      (into [] px))))
 
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
