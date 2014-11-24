@@ -70,7 +70,9 @@
                     nil)
    (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
               nil)
-   (make-scale-op 0.5)])
+   (make-scale-op 0.5)
+   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
+              nil)])
 
 (defn grab-pixels [img [x y] [w h]]
   (let [px (int-array (* w h))
