@@ -8,9 +8,11 @@
   (get coll (+ (* y max-x)
                x)))
 
-(defn assoc2d [coll [x y]]
-  (assoc coll (+ (* y max-x)
-                 x)))
+(defn assoc2d [coll [x y] val]
+  (assoc coll
+    (+ (* y max-x)
+       x)
+    val))
 
 (defn bounded-neighbours [[x y]]
   (into #{}
