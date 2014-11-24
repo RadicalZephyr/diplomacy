@@ -67,7 +67,8 @@
   (def img  (file->image f))
   (let [gfx (.createGraphics img)]
     (.setBackground gfx Color/WHITE)
-    (.clearRect gfx 395 0 365 73))
+    (.clearRect gfx 396 3 357 70)
+    (.clearRect gfx 394 3 1 70))
   (-main)
   (draw-image img
               (get-canvas)))
