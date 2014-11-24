@@ -101,8 +101,21 @@
 (defn make-get-xy [img]
   (let [img-w (.getWidth  img)]
     (fn [coll [x y]]
-      (get coll (+ img-w
+      (get coll (+ x
                    (* y img-w))))))
+
+(defn by-quads [img]
+  (let [rgbs (get-all-rgb img)
+        get-xy (make-get-xy img)
+        img-w (.getWidth  img)
+        img-h (.getHeight img)]
+    (for [x (range (- img-w 2))
+          y (range (- img-h 2))]
+      {:x x :y y
+       :pixels [(get-xy rgbs [     x       y])
+                (get-xy rgbs [(inc x)      y])
+                (get-xy rgbs [     x  (inc y)])
+                (get-xy rgbs [(inc x) (inc y)])]})))
 
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
