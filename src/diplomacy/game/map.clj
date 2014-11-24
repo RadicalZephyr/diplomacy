@@ -93,6 +93,11 @@
           :when id]
       {:x x :y y :type id})))
 
+(defn get-all-rgb [img]
+  (let [img-w (.getWidth  img)
+        img-h (.getHeight img)]
+    (into [] (.getRGB img 0 0 img-w img-h nil 0 img-w))))
+
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
