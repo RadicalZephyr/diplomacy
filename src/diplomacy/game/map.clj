@@ -29,6 +29,10 @@
 (defn file->image [filename]
   (ImageIO/read filename))
 
+(defn image->file [img filename]
+  (let [ext (last (clojure.string/split filename #"\."))]
+    (ImageIO/write img ext (io/file filename))))
+
 
 ;; Seesaw related infrastructure
 
