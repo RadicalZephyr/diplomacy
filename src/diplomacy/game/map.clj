@@ -196,7 +196,7 @@
     nimg))
 
 (defn connected-image [img]
-  (let [rgb (get-all-rgb fimg)
+  (let [rgb (get-all-rgb  img)
         img-w (.getWidth  img)
         img-h (.getHeight img)
         nrgb (cn/connected-components rgb img-w img-h)]
