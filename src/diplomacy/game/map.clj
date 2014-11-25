@@ -68,20 +68,7 @@
   (show-frame @root))
 
 
-;; Begin actual image processing code
-
-(defn grab-pixels [img [x y] [w h]]
-  (let [px (int-array (* w h))
-        pg (PixelGrabber. img x y w h px 0 w)]
-    (if (.grabPixels pg)
-      (into [] px))))
-
-(defn grab-all-pixels [img [w h]]
-  (let [img-w (.getWidth img)
-        img-h (.getHeight img)]
-    (for [x (range (- img-w w))
-          y (range (- img-h h))]
-      {:x x :y y :pixels (grab-pixels img [x y] [w h])})))
+;; Corner identification stuff
 
 (def corner-patterns-2x {[-16777216 -16777216 -16777216 -1] :tlo
                          [-16777216 -16777216 -1 -16777216] :tro
@@ -133,6 +120,14 @@
 (defn to-corner [{:keys [x y pixels] :as m}]
   (assoc m :corner (corner-patterns-3x pixels)))
 
+(defn get-all-corners [grids]
+  (->> grids
+       (filter corner?)
+       (map to-corner)))
+
+
+;; Process the image as a vector of integers
+
 (defn get-all-rgb [img]
   (let [img-w (.getWidth  img)
         img-h (.getHeight img)]
@@ -157,11 +152,6 @@
                           (for [dx (range w)
                                 dy (range h)]
                             [(+ x dx) (+ y dy)])))})))
-
-(defn get-all-corners [grids]
-  (->> grids
-      (filter corner?)
-      (map to-corner)))
 
 (defn get-area-subimage [img points]
   (let [xs (map first points)
