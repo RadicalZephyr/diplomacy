@@ -184,6 +184,8 @@
             (.clearRect gfx x y 1 1))
           points))))
 
+;; Connected components
+
 (defn rgb->image [img rgb]
   (let [img-w (.getWidth  img)
         img-h (.getHeight img)
@@ -220,6 +222,9 @@
            (filter (fn [[_ pts]]
                      (> (count pts) 30)))))))
 
+
+;; Coloring components
+
 (def color-cycle (cycle [Color/GREEN Color/BLUE Color/MAGENTA
                          Color/CYAN  Color/PINK Color/ORANGE]))
 
@@ -230,6 +235,7 @@
 (defn color-components [img components colors]
   (dorun
    (map (partial color-component img) components colors)))
+
 
 ;; Image pre-processing stuff
 
