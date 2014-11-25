@@ -27,13 +27,7 @@
 ;; Utility to open image files
 
 (defn file->image [filename]
-  (with-open [istream (ImageIO/createImageInputStream filename)]
-   (let [itr (ImageIO/getImageReaders istream)]
-     (if-not (.hasNext itr)
-       (throw (ex-info  "No image reader found for stream" {:filename filename}))
-       (let [reader (.next itr)]
-         (.setInput reader istream true)
-         (.read reader 0))))))
+  (ImageIO/read filename))
 
 
 ;; Seesaw related infrastructure
