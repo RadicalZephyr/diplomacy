@@ -133,17 +133,6 @@
 (defn to-corner [{:keys [x y pixels] :as m}]
   (assoc m :corner (corner-patterns-3x pixels)))
 
-(defn classify-all-pixels [img]
-  (let [w 2 h 2
-        img-w (.getWidth img)
-        img-h (.getHeight img)]
-    (for [x (range (- img-w w))
-          y (range (- img-h h))
-          :let [pxs (grab-pixels img [x y] [w h])
-                id (corner-patterns-2x pxs)]
-          :when id]
-      {:x x :y y :type id})))
-
 (defn get-all-rgb [img]
   (let [img-w (.getWidth  img)
         img-h (.getHeight img)]
