@@ -159,37 +159,6 @@
       (filter corner?)
       (map to-corner)))
 
-(defn get-all-contiguous-pixels [img [x y]]
-  (let [rgbs (get-all-rgb img)
-        get-xy (make-get-xy img)
-        val (get-xy rgbs [x y])
-        img-w (.getWidth  img)
-        img-h (.getHeight img)]
-    (loop [x x
-           y y
-           checked? #{}]
-      (if-not (checked? [x y])
-        (let [valid-move?
-              (fn [pt]
-                (and (not (checked? pt))
-                     (= val (get-xy rgbs pt))))]
-
-          (cond
-           (valid-move? [(inc x) y])
-           (recur (inc x) y (conj checked? [x y]))
-
-           (valid-move? [x (inc y)])
-           (recur x (inc y) (conj checked? [x y]))
-
-           (valid-move? [(dec x) y])
-           (recur (dec x) y (conj checked? [x y]))
-
-           (valid-move? [x (dec y)])
-           (recur  x (dec y) (conj checked? [x y]))
-
-               :else checked?))
-        checked?))))
-
 (defn get-area-subimage [img points]
   (let [xs (map first points)
         ys (map second points)
@@ -200,11 +169,6 @@
     (when (and (> x-max x-min)
                (> y-max y-min))
      (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min)))))
-
-(defn corner->subimage [img {:keys [x y]}]
-  (->> [(inc x) (inc y)]
-       (get-all-contiguous-pixels img)
-       (get-area-subimage img)))
 
 (defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
   `(let ~let-vec
