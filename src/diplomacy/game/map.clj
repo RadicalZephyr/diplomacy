@@ -211,10 +211,14 @@
                   y (range h)]
               [x y])]
     (binding [cn/max-x w cn/max-y h]
-     (reduce (fn [acc pt]
-               (update-in acc [(cn/get2d crgb pt)]
-                          conj pt))
-             {} pts))))
+      (->> pts
+           (reduce
+            (fn [acc pt]
+              (update-in acc [(cn/get2d crgb pt)]
+                         conj pt))
+            {})
+           (filter (fn [[_ pts]]
+                     (> (count pts) 30)))))))
 
 ;; Image pre-processing stuff
 
