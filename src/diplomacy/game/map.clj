@@ -125,7 +125,7 @@
 (defn corner? [{pxs :pixels}]
   (corner-patterns-3x pxs))
 
-(defn to-corner [{:keys [x y pixels] :as m}]
+(defn to-corner [{:keys [pixels] :as m}]
   (assoc m :corner (corner-patterns-3x pixels)))
 
 (defn get-all-corners [grids]
@@ -154,7 +154,7 @@
         img-h (.getHeight img)]
     (for [x (range (- img-w w))
           y (range (- img-h h))]
-      {:x x :y y
+      {:point [x y]
        :pixels (into []
                      (map (partial get-xy rgbs)
                           (for [dx (range w)
