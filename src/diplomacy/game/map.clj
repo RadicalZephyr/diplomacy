@@ -16,6 +16,16 @@
                             LookupOp
                             PixelGrabber)))
 
+;; Utility macro
+
+(defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
+  `(let ~let-vec
+     (try
+       ~@forms
+       (finally (~close-fn ~binding)))))
+
+;; Utility to open image files
+
 (defn file->image [filename]
   (with-open [istream (ImageIO/createImageInputStream filename)]
    (let [itr (ImageIO/getImageReaders istream)]
@@ -24,6 +34,9 @@
        (let [reader (.next itr)]
          (.setInput reader istream true)
          (.read reader 0))))))
+
+
+;; Seesaw related infrastructure
 
 (def root (atom nil))
 
@@ -48,12 +61,14 @@
        s/show!)))
 
 (defn -main [& args]
-  (compare-and-set! root
-                    nil
-                    (s/frame :title "Images!!"
-                             :minimum-size [385 :by 410]
-                             :content (s/canvas :id :canvas)))
+  (compare-and-set!
+   root nil (s/frame :title "Images!!"
+                     :minimum-size [385 :by 410]
+                     :content (s/canvas :id :canvas)))
   (show-frame @root))
+
+
+;; Begin actual image processing code
 
 (defn grab-pixels [img [x y] [w h]]
   (let [px (int-array (* w h))
@@ -169,12 +184,6 @@
     (when (and (> x-max x-min)
                (> y-max y-min))
      (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min)))))
-
-(defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
-  `(let ~let-vec
-     (try
-       ~@forms
-       (finally (~close-fn ~binding)))))
 
 
 ;; Connected components
