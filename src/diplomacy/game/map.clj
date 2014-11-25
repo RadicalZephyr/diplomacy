@@ -202,6 +202,19 @@
         nrgb (cn/connected-components rgb img-w img-h)]
     (rgb->image img nrgb)))
 
+(defn components [img]
+  (let [rgb (get-all-rgb img)
+        w (.getWidth  img)
+        h (.getHeight img)
+        crgb (cn/connected-components rgb w h)
+        pts (for [x (range w)
+                  y (range h)]
+              [x y])]
+    (binding [cn/max-x w cn/max-y h]
+     (reduce (fn [acc pt]
+               (update-in acc [(cn/get2d crgb pt)]
+                          conj pt))
+             {} pts))))
 
 ;; Image pre-processing stuff
 
