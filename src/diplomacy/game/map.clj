@@ -176,13 +176,6 @@
        ~@forms
        (finally (~close-fn ~binding)))))
 
-(defn highlight-points [img color points]
-  (with-cleanup [gfx (.createGraphics img)] .dispose
-    (.setBackground gfx color)
-    (dorun
-     (map (fn [[x y]]
-            (.clearRect gfx x y 1 1))
-          points))))
 
 ;; Connected components
 
