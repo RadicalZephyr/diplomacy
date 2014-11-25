@@ -232,6 +232,12 @@
     (.scale aft scale scale)
     (AffineTransformOp. aft AffineTransformOp/TYPE_BILINEAR)))
 
+(defn color-convert [img colorspace]
+  (let [ccop (ColorConvertOp. (ColorSpace/getInstance
+                               colorspace)
+                              nil)]
+    (.filter ccop img nil)))
+
 (def filter-ops
   [(ColorConvertOp. (ColorSpace/getInstance
                      ColorSpace/CS_GRAY)
