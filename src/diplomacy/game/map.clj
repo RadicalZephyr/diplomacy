@@ -202,6 +202,9 @@
         nrgb (cn/connected-components rgb img-w img-h)]
     (rgb->image img nrgb)))
 
+
+;; Image pre-processing stuff
+
 (defn threshold-table [threshold]
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
