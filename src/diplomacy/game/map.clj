@@ -263,7 +263,7 @@
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
 
-(defn invert-table []
+(def invert-table
   (byte-array (map (fn [x] (- 255 x))
                    (range 256))))
 
@@ -273,20 +273,22 @@
     (.scale aft scale scale)
     (AffineTransformOp. aft AffineTransformOp/TYPE_BILINEAR)))
 
+(defn make-lookup-op [table]
+  (LookupOp. (ByteLookupTable. 0 table) nil))
+
 (defn invert-image [img]
-  (let [lookup-op (LookupOp. (ByteLookupTable. 0 (invert-table)) nil)]
+  (let [lookup-op (make-lookup-op invert-table)]
     (.filter lookup-op img nil)))
+
+(defn threshold-image [img threshold]
+  (let [threshold-op (make-lookup-op (threshold-table threshold))]
+    (.filter threshold-op img nil)))
 
 (defn color-convert-image [img colorspace]
   (let [ccop (ColorConvertOp. (ColorSpace/getInstance
                                colorspace)
                               nil)]
     (.filter ccop img nil)))
-
-(defn threshold-image [img threshold]
-  (let [threshold-op (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
-                                nil)]
-    (.filter threshold-op img nil)))
 
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
