@@ -277,21 +277,16 @@
   (let [lookup-op (LookupOp. (ByteLookupTable. 0 (invert-table)) nil)]
     (.filter lookup-op img nil)))
 
-(defn color-convert [img colorspace]
+(defn color-convert-image [img colorspace]
   (let [ccop (ColorConvertOp. (ColorSpace/getInstance
                                colorspace)
                               nil)]
     (.filter ccop img nil)))
 
-(def filter-ops
-  [(ColorConvertOp. (ColorSpace/getInstance
-                     ColorSpace/CS_GRAY)
-                    nil)
-   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
-              nil)
-   (make-scale-op 0.5)
-   (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
-              nil)])
+(defn threshold-image [img threshold]
+  (let [threshold-op (LookupOp. (ByteLookupTable. 0 (threshold-table 150))
+                                nil)]
+    (.filter threshold-op img nil)))
 
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
@@ -301,10 +296,11 @@
     (.clearRect gfx 396 3 357 70)
     (.clearRect gfx 394 3 1 70))
   (-main)
-  (def fimg (reduce (fn [img op]
-                     (.filter op img nil))
-                   img filter-ops))
-  (draw-image fimg
+  (def iimg (-> img
+                (color-convert-image ColorSpace/CS_GRAY)
+                invert-image
+                (threshold-image 150)))
+  (draw-image iimg
               (get-canvas))
 
   (def corners (get-all-corners (w-by-h img [3 3]))))
