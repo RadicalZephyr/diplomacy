@@ -139,6 +139,10 @@
        (filter corner?)
        (map to-corner)))
 
+(defn canonicalize-corner [corner]
+  (assoc corner
+    :inner-point (corner->inner-point corner)
+    :outer-point (corner->outer-point corner)))
 
 ;; Process the image as a vector of integers
 
