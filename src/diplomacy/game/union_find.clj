@@ -13,3 +13,5 @@
     (if (not= px py)
       (assoc parent py px)
       parent)))
+
+(def test-uf [0 2 3 0 3 7 7 0 3])
