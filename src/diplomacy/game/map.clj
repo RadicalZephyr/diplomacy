@@ -102,23 +102,31 @@
                           -1 -1 -1
                           -1 -1 -16777216] :bri})
 
-(def corner->inner-point {:tlo (fn [x y] [(inc x) (inc y)])
-                          :tro (fn [x y] [(dec x) (inc y)])
-                          :blo (fn [x y] [(inc x) (dec y)])
-                          :bro (fn [x y] [(dec x) (dec y)])
-                          :tli (fn [x y] [(inc x) (inc y)])
-                          :tri (fn [x y] [(dec x) (inc y)])
-                          :bli (fn [x y] [(inc x) (dec y)])
-                          :bri (fn [x y] [(dec x) (dec y)])})
+(defn corner->inner-point [{:keys [type point]}]
+  (apply
+   (case type
+     :tlo (fn [x y] [(inc x) (inc y)])
+     :tro (fn [x y] [(dec x) (inc y)])
+     :blo (fn [x y] [(inc x) (dec y)])
+     :bro (fn [x y] [(dec x) (dec y)])
+     :tli (fn [x y] [(inc x) (inc y)])
+     :tri (fn [x y] [(dec x) (inc y)])
+     :bli (fn [x y] [(inc x) (dec y)])
+     :bri (fn [x y] [(dec x) (dec y)]))
+   point))
 
-(def corner->outer-point {:tlo (fn [x y] [x y])
-                          :tro (fn [x y] [(+ 2 x) y])
-                          :blo (fn [x y] [x (+ 2 y)])
-                          :bro (fn [x y] [(+ 2 x) (+ 2 y)])
-                          :tli (fn [x y] [x y])
-                          :tri (fn [x y] [(+ 2 x) y])
-                          :bli (fn [x y] [x (+ 2 y)])
-                          :bri (fn [x y] [(+ 2 x) (+ 2 y)])})
+(defn corner->outer-point [{:keys [type point]}]
+  (apply
+   (case type
+     :tlo (fn [x y] [x y])
+     :tro (fn [x y] [(+ 2 x) y])
+     :blo (fn [x y] [x (+ 2 y)])
+     :bro (fn [x y] [(+ 2 x) (+ 2 y)])
+     :tli (fn [x y] [x y])
+     :tri (fn [x y] [(+ 2 x) y])
+     :bli (fn [x y] [x (+ 2 y)])
+     :bri (fn [x y] [(+ 2 x) (+ 2 y)]))
+   point))
 
 (defn corner? [{pxs :pixels}]
   (corner-patterns-3x pxs))
