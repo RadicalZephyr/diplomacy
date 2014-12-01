@@ -132,7 +132,9 @@
   (corner-patterns-3x pxs))
 
 (defn to-corner [{:keys [pixels] :as m}]
-  (assoc m :type (corner-patterns-3x pixels)))
+  (-> m
+      (dissoc :pixels)
+      (assoc :type (corner-patterns-3x pixels))))
 
 (defn get-all-corners [grids]
   (->> grids
@@ -140,9 +142,10 @@
        (map to-corner)))
 
 (defn canonicalize-corner [corner]
-  (assoc corner
-    :inner-point (corner->inner-point corner)
-    :outer-point (corner->outer-point corner)))
+  (-> corner
+      (dissoc :point)
+      (assoc :inner-point (corner->inner-point corner)
+             :outer-point (corner->outer-point corner))))
 
 ;; Process the image as a vector of integers
 
