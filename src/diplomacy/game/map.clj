@@ -124,7 +124,7 @@
   (corner-patterns-3x pxs))
 
 (defn to-corner [{:keys [pixels] :as m}]
-  (assoc m :corner (corner-patterns-3x pixels)))
+  (assoc m :type (corner-patterns-3x pixels)))
 
 (defn get-all-corners [grids]
   (->> grids
