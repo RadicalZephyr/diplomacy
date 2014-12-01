@@ -263,11 +263,19 @@
   (byte-array (map (fn [x] (if (< x threshold) 0 255))
                    (range 256))))
 
+(defn invert-table []
+  (byte-array (map (fn [x] (- 255 x))
+                   (range 256))))
+
 (defn make-scale-op [scale]
   (let [scale (float scale)
         aft (AffineTransform.)]
     (.scale aft scale scale)
     (AffineTransformOp. aft AffineTransformOp/TYPE_BILINEAR)))
+
+(defn invert-image [img]
+  (let [lookup-op (LookupOp. (ByteLookupTable. 0 (invert-table)) nil)]
+    (.filter lookup-op img nil)))
 
 (defn color-convert [img colorspace]
   (let [ccop (ColorConvertOp. (ColorSpace/getInstance
