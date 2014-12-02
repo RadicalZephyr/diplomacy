@@ -4,7 +4,7 @@
 
 (deftest connected-components-test
   (testing "Recursive connected components"
-    (doseq [impl [:recursive]]
+    (doseq [impl [:recursive :classical]]
       (is (= [1 1 0 1 1 1
               1 1 0 1 0 0
               1 1 1 1 0 0]
@@ -12,7 +12,7 @@
                                     -1 -1  0 -1  0  0
                                     -1 -1 -1 -1  0  0]
                                    6 3
-                                   :impl :recursive)))
+                                   :impl impl)))
 
       (is (= [1 1 0 2 2 2
               1 1 0 2 0 0
@@ -21,7 +21,7 @@
                                     -1 -1  0 -1  0  0
                                     -1 -1 -1  0  0  0]
                                    6 3
-                                   :impl :recursive)))
+                                   :impl impl)))
 
       (is (= [1 1 0 2 2 2
               1 1 0 2 0 0
@@ -30,7 +30,7 @@
                                     -1 -1  0 -1  0  0
                                     -1 -1 -1  0 -1  0]
                                    6 3
-                                   :impl :recursive)))))
+                                   :impl impl)))))
   (testing "Prior-neighbours"
     (binding [max-x 10 max-y 10]
       (is (empty?
