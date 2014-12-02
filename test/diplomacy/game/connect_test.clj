@@ -39,4 +39,18 @@
        (is (= [[0 0]]
               (prior-neighbours pt))))
      (is (= [[0 1] [1 0]]
-            (prior-neighbours [1 1]))))))
+            (prior-neighbours [1 1])))))
+
+  (testing "label for point"
+    (let [rgbs [1 2 3 4
+                4 3 2 1]]
+      (binding [max-x 4
+                max-y 2]
+        (is (= (label-for-point rgbs [0 1])
+               1))
+        (is (= (label-for-point rgbs [1 1])
+               2))
+        (is (= (label-for-point rgbs [2 1])
+               3))
+        (is (= (label-for-point rgbs [3 1])
+               2))))))
