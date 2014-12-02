@@ -94,7 +94,6 @@
           (map #(assoc % :value (get2d @rgbs (:pt %))))
 
           (map (fn [{:keys [pt pn value]}]
-                 (println @rgbs)
                  (when (= -1 value)
                    (if-let [labels (seq (labels @rgbs pn))]
                      (let [m (apply min labels)]
