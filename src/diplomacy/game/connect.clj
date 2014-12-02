@@ -107,6 +107,11 @@
 
     [@rgbs @unions]))
 
+(defn second-pass [[rgbs unions]]
+  (->> rgbs
+      (map #(uf/find unions %))
+      (into [])))
+
 (defn pass-one [rgbs pts]
   (let [label (atom 1)
         union (atom uf/empty-union-find)]
