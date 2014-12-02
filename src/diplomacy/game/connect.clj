@@ -74,18 +74,16 @@
 (defn labels [rgbs pts]
   (map (partial get2d rgbs) pts))
 
-(defn classical-connected-components [rgbs]
+(defn pass-one [rgbs pts]
   (let [label (atom 1)
         union (atom uf/empty-union-find)]
     (loop [rgbs rgbs
-           pts (for [x (range 0 max-x)
-                     y (range 0 max-y)]
-                 [x y])]
+           pts pts]
       (if (seq pts)
         (let [pt (first pts)]
           (if (= (get2d rgbs pt)
                  -1)
-            (if-let [pn (seq (prior-neighbours rgbs pt))]
+            (if-let [pn (seq (prior-neighbours pt))]
               (let [m (->> pn
                            (labels rgbs)
                            (apply min))]
@@ -105,7 +103,31 @@
                   (recur (assoc rgbs pt lbl)
                          (rest pts)))))
             ;; If it's not a -1, then skip this pixel
-            (recur rgbs (rest pts))))))))
+            (recur rgbs (rest pts))))
+        [rgbs @union]))))
+
+(defn pass-two [[rgbs union] orgbs]
+  (loop [rgbs rgbs
+         pts (for [x (range 0 max-x)
+                   y (range 0 max-y)]
+               [x y])]
+    (if (seq pts)
+        (let [pt (first pts)]
+          (if (= (get2d orgbs pt)
+                 -1)
+            ;; Replace the labels with the corresponding unioned root label
+            (recur (assoc rgbs pt (uf/find union (get2d rgbs pt)))
+                   (rest pts))
+            ;; If it wasn't originally a -1, then skip this pixel
+            (recur rgbs (rest pts))))
+        rgbs)))
+
+(defn classical-connected-components [rgbs]
+  (-> rgbs
+      (pass-one (for [x (range 0 max-x)
+                      y (range 0 max-y)]
+                  [x y]))
+      (pass-two rgbs)))
 
 (defn connected-components [rgbs w h & {:keys [impl] :or {:impl :recursive}}]
   (binding [max-x w
