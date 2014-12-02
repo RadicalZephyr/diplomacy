@@ -201,7 +201,7 @@
         y-max (apply max ys)]
     (when (and (> x-max x-min)
                (> y-max y-min))
-     (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min)))))
+      (.getSubimage img x-min y-min (- x-max x-min) (- y-max y-min)))))
 
 
 ;; Connected components
@@ -221,14 +221,18 @@
   (let [rgb (get-all-rgb  img)
         img-w (.getWidth  img)
         img-h (.getHeight img)
-        nrgb (cn/connected-components img-w img-h rgb)]
+        nrgb (->> rgb
+                  (replace {-16777216 0})
+                  (cn/connected-components img-w img-h))]
     (rgb->image img nrgb)))
 
 (defn components [img]
   (let [rgb (get-all-rgb img)
         w (.getWidth  img)
         h (.getHeight img)
-        crgb (cn/connected-components w h rgb)
+        crgb (->> rgb
+                  (replace {-16777216 0})
+                  (cn/connected-components w h))
         pts (for [x (range w)
                   y (range h)]
               [x y])]
