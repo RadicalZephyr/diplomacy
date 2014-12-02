@@ -107,10 +107,24 @@
 
     [@rgbs @unions]))
 
+(defn minimum-label-replacements [unions]
+  (let [label (atom -1)]
+    (->> unions
+         count
+         range
+         (group-by (fn [label]
+                     (uf/find unions label)))
+         seq
+         (mapcat (fn [[k vs]]
+                   (let [min-label (swap! label inc)]
+                     (map (fn [v]
+                            [v min-label])
+                          vs))))
+         (into {}))))
+
 (defn second-pass [[rgbs unions]]
-  (->> rgbs
-      (map #(uf/find unions %))
-      (into [])))
+  (let [equivalence-maps (minimum-label-replacements unions)]
+    (replace equivalence-maps rgbs)))
 
 (defn classical-connected-components [rgbs]
   (-> rgbs
