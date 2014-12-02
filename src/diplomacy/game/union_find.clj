@@ -14,3 +14,6 @@
     (if (not= px py)
       (assoc parent py px)
       parent)))
+
+(defn add-label [parent]
+  (conj parent 0))
