@@ -252,7 +252,8 @@
 
 (defn color-component [img pts color]
   (doseq [[x y] pts]
-    (.setRGB img x y (.getRGB color))))
+    (.setRGB img x y (.getRGB color)))
+  img)
 
 (defn color-components [img components colors]
   (dorun
