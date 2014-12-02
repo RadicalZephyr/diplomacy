@@ -94,13 +94,13 @@
                            (labels rgbs))))
                 ;; And then set the label this point in the image with
                 ;; the smallest label
-                (recur (assoc rgbs pt m)
+                (recur (assoc2d rgbs pt m)
                        (rest pts)))
               ;; Otherwise, just label this point, and
               (do
                 (let [lbl @label]
                   (swap! label inc)
-                  (recur (assoc rgbs pt lbl)
+                  (recur (assoc2d rgbs pt lbl)
                          (rest pts)))))
             ;; If it's not a -1, then skip this pixel
             (recur rgbs (rest pts))))
@@ -116,7 +116,7 @@
           (if (= (get2d orgbs pt)
                  -1)
             ;; Replace the labels with the corresponding unioned root label
-            (recur (assoc rgbs pt (uf/find union (get2d rgbs pt)))
+            (recur (assoc2d rgbs pt (uf/find union (get2d rgbs pt)))
                    (rest pts))
             ;; If it wasn't originally a -1, then skip this pixel
             (recur rgbs (rest pts))))
