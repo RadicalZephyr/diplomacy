@@ -10,8 +10,14 @@
           (recur next)
           j)))))
 
+(defn pad-to [parent max]
+  (into parent
+        (take (- max (count parent))
+              (repeat 0))))
+
 (defn union [parent x y]
-  (let [px (find parent x)
+  (let [parent (pad-to parent (max x y))
+        px (find parent x)
         py (find parent y)]
     (if (and px py
              (not= px py))
