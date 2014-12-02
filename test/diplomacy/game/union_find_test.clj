@@ -7,27 +7,19 @@
 
   (let [test-struct [0 2 3 0 3 7 7 0 3]]
     (testing "Find operation"
-     (is (= (find test-struct 1)
-            3))
-     (is (= (find test-struct 2)
-            3))
-     (is (= (find test-struct 3)
-            3))
-     (is (= (find test-struct 4)
-            3))
-     (is (= (find test-struct 8)
-            3))
+      (doseq [val [1 2 3 4 8]]
+        (is (= (find test-struct val)
+               3)))
+      (doseq [val [5 6 7]]
+        (is (= (find test-struct val)
+               7))))
 
-     (is (= (find test-struct 5)
-            7))
-     (is (= (find test-struct 6)
-            7))
-     (is (= (find test-struct 7)
-            7)))
     (testing "Union operation"
       (let [three-over [0 2 3 0 3 7 7 3 3]
             seven-over [0 2 3 7 3 7 7 0 3]]
-        (is (= three-over
-               (union test-struct 3 7)))
-        (is (= seven-over
-               (union test-struct 7 3)))))))
+        (doseq [first [1 2 3 4 8]
+                second [5 6 7]]
+          (is (= three-over
+                 (union test-struct first second)))
+          (is (= seven-over
+                 (union test-struct second first))))))))
