@@ -131,7 +131,8 @@
       first-pass
       second-pass))
 
-(defn connected-components [rgbs w h & {:keys [impl] :or {:impl :classical}}]
+(defn connected-components [rgbs w h & {:keys [impl]
+                                        :or   {impl :classical}}]
   (binding [max-x w
             max-y h]
     (case impl
