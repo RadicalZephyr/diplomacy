@@ -2,16 +2,18 @@
   (:refer-clojure :exclude [find]))
 
 (defn find [parent x]
-  (loop [j x]
-    (let [next (get parent j)]
-      (if (not= 0 next)
-        (recur next)
-        j))))
+  (when (not= x 0)
+    (loop [j x]
+      (let [next (get parent j)]
+        (if (not= 0 next)
+          (recur next)
+          j)))))
 
 (defn union [parent x y]
   (let [px (find parent x)
         py (find parent y)]
-    (if (not= px py)
+    (if (and px py
+             (not= px py))
       (assoc parent py px)
       parent)))
 
