@@ -1,4 +1,5 @@
-(ns diplomacy.game.connect)
+(ns diplomacy.game.connect
+  (:require [diplomacy.game.union-find :as uf]))
 
 (def ^:dynamic max-x)
 
@@ -59,11 +60,23 @@
   (let [label (atom 0)]
     (find-components rgbs label)))
 
+(defn prior-neighbours [[x y]]
+  (doall
+   (for [dx [-1 0]
+         dy [-1 0]
+         :when (not= dx dy)]
+     [(+ dx x) (+ dy y)])))
+
+(def labels get2d)
+
+(defn classical-connected-components [rgbs])
+
 (defn connected-components [rgbs w h & {:keys [impl] :or {:impl :recursive}}]
   (binding [max-x w
             max-y h]
     (case impl
       :recursive (recursive-connected-components rgbs)
+      :classical (classical-connected-components rgbs)
       (throw (ex-info "No implementation of that type defined." {:impl impl})))))
 
 (defn print-grid [grid w]
