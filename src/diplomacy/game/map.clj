@@ -278,6 +278,10 @@
 (defn make-lookup-op [table]
   (LookupOp. (ByteLookupTable. 0 table) nil))
 
+(defn scale-image [img scale]
+  (let [scale-op (make-scale-op scale)]
+    (.filter scale-op img nil)))
+
 (defn invert-image [img]
   (let [lookup-op (make-lookup-op invert-table)]
     (.filter lookup-op img nil)))
