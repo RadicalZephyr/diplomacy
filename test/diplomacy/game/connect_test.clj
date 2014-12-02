@@ -46,11 +46,7 @@
                 4 3 2 1]]
       (binding [max-x 4
                 max-y 2]
-        (is (= (label-for-point rgbs [0 1])
-               1))
-        (is (= (label-for-point rgbs [1 1])
-               2))
-        (is (= (label-for-point rgbs [2 1])
-               3))
-        (is (= (label-for-point rgbs [3 1])
-               2))))))
+        (is (= (vec
+                (labels rgbs (for [x (range 4)
+                                   y (range 2)] [x y])))
+               [1 4 2 3 3 2 4 1]))))))
