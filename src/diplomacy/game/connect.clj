@@ -68,15 +68,3 @@
 
 (defn print-grid [grid w]
   (dorun (map println (partition w grid))))
-
-(def test-grid [-1 -1  0 -1 -1 -1
-                -1 -1  0 -1  0  0
-                -1 -1 -1 -1  0  0])
-
-(def test-grid2 [-1 -1  0 -1 -1 -1
-                 -1 -1  0 -1  0  0
-                 -1 -1 -1  0  0  0])
-
-(def test-grid3 [-1 -1  0 -1 -1 -1
-                 -1 -1  0 -1  0  0
-                 -1 -1 -1  0 -1  0])
