@@ -5,7 +5,8 @@
   (when (not= x 0)
     (loop [j x]
       (let [next (get parent j)]
-        (if (not= 0 next)
+        (if (and next
+                 (not= 0 next))
           (recur next)
           j)))))
 
