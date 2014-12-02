@@ -74,6 +74,38 @@
 (defn labels [rgbs pts]
   (map (partial get2d rgbs) pts))
 
+(defn classical-connected-components [rgbs]
+  (let [label (atom 1)
+        union (atom uf/empty-union-find)]
+    (loop [rgbs rgbs
+           pts (for [x (range 0 max-x)
+                     y (range 0 max-y)]
+                 [x y])]
+      (if (seq pts)
+        (let [pt (first pts)]
+          (if (= (get2d rgbs pt)
+                 -1)
+            (if-let [pn (seq (prior-neighbours rgbs pt))]
+              (let [m (->> pn
+                           (labels rgbs)
+                           (apply min))]
+                ;; Union all the labels of the prior-neighbours of this pixel
+                (dorun
+                 (map #(swap! union uf/union % m)
+                      (->> (prior-neighbours rgbs pt)
+                           (labels rgbs))))
+                ;; And then set the label this point in the image with
+                ;; the smallest label
+                (recur (assoc rgbs pt m)
+                       (rest pts)))
+              ;; Otherwise, just label this point, and
+              (do
+                (let [lbl @label]
+                  (swap! label inc)
+                  (recur (assoc rgbs pt lbl)
+                         (rest pts)))))
+            ;; If it's not a -1, then skip this pixel
+            (recur rgbs (rest pts))))))))
 
 (defn connected-components [rgbs w h & {:keys [impl] :or {:impl :recursive}}]
   (binding [max-x w
