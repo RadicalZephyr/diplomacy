@@ -112,59 +112,10 @@
       (map #(uf/find unions %))
       (into [])))
 
-(defn pass-one [rgbs pts]
-  (let [label (atom 1)
-        union (atom uf/empty-union-find)]
-    (loop [rgbs rgbs
-           pts pts]
-      (if (seq pts)
-        (let [pt (first pts)]
-          (if (= (get2d rgbs pt)
-                 -1)
-            (if-let [pn (seq (prior-neighbours pt))]
-              (let [m (->> pn
-                           (labels rgbs)
-                           (apply min))]
-                ;; Union all the labels of the prior-neighbours of this pixel
-                (dorun
-                 (map #(swap! union uf/union % m)
-                      (labels rgbs pn)))
-                ;; And then set the label this point in the image with
-                ;; the smallest label
-                (recur (assoc2d rgbs pt m)
-                       (rest pts)))
-              ;; Otherwise, just label this point, and
-              (do
-                (let [lbl @label]
-                  (swap! label inc)
-                  (recur (assoc2d rgbs pt lbl)
-                         (rest pts)))))
-            ;; If it's not a -1, then skip this pixel
-            (recur rgbs (rest pts))))
-        [rgbs @union]))))
-
-(defn pass-two [[rgbs union] orgbs]
-  (loop [rgbs rgbs
-         pts (for [x (range 0 max-x)
-                   y (range 0 max-y)]
-               [x y])]
-    (if (seq pts)
-        (let [pt (first pts)]
-          (if (= (get2d orgbs pt)
-                 -1)
-            ;; Replace the labels with the corresponding unioned root label
-            (recur (assoc2d rgbs pt (uf/find union (get2d rgbs pt)))
-                   (rest pts))
-            ;; If it wasn't originally a -1, then skip this pixel
-            (recur rgbs (rest pts))))
-        rgbs)))
-
 (defn classical-connected-components [rgbs]
   (-> rgbs
-      (pass-one (for [x (range 0 max-x)
-                      y (range 0 max-y)]
-                  [x y]))
-      (pass-two rgbs)))
+      first-pass
+      second-pass))
 
 (defn connected-components [rgbs w h & {:keys [impl] :or {:impl :recursive}}]
   (binding [max-x w
