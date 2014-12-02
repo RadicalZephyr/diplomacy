@@ -304,6 +304,12 @@
                 (color-convert-image ColorSpace/CS_GRAY)
                 invert-image
                 (threshold-image 150)))
+  (def components-seq (map second (drop 1 (components iimg))))
+  (let [grouped (group-by #(> (count %) 100)
+                   components-seq)]
+    (def border-component (first (grouped true)))
+    (def words-components (partition 2 (flatten (grouped false)))))
+   ;; Get the only element of the list
   (draw-image iimg
               (get-canvas))
 
