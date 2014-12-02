@@ -74,6 +74,11 @@
 (def labels get2d)
 
 (defn classical-connected-components [rgbs])
+(defn label-for-point [rgbs pt]
+  (->> (prior-neighbours pt)
+       (map (partial labels rgbs))
+       (apply min)))
+
 
 (defn connected-components [rgbs w h & {:keys [impl] :or {:impl :recursive}}]
   (binding [max-x w
