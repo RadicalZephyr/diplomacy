@@ -55,11 +55,16 @@
           (recur rgbs (rest pts))))
       rgbs)))
 
-(defn connected-components [rgbs w h]
+(defn recursive-connected-components [rgbs w h]
   (binding [max-x w
             max-y h]
     (let [label (atom 0)]
      (find-components rgbs label))))
+
+(defn connected-components [rgbs w h & {:keys [impl] :or {:impl :recursive}}]
+  (case impl
+    :recursive (recursive-connected-components rgbs w h)
+    (throw (ex-info "No implementation of that type defined." {:impl impl}))))
 
 (defn print-grid [grid w]
   (dorun (map println (partition w grid))))
