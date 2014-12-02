@@ -64,8 +64,12 @@
   (doall
    (for [dx [-1 0]
          dy [-1 0]
-         :when (not= dx dy)]
-     [(+ dx x) (+ dy y)])))
+         :let [nx (+ dx x)
+               ny (+ dy y)]
+         :when (and (not= dx dy)
+                    (> max-x nx -1)
+                    (> max-y ny -1))]
+     [nx ny])))
 
 (def labels get2d)
 

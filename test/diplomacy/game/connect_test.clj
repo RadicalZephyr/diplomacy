@@ -30,4 +30,15 @@
                                     -1 -1  0 -1  0  0
                                     -1 -1 -1  0 -1  0]
                                    6 3
-                                   :impl :recursive))))))
+                                   :impl :recursive)))))
+  (testing "Prior-neighbours"
+    (is (empty?
+         (binding [max-x 10 max-y 10]
+           (prior-neighbours [0 0]))))
+    (doseq [pt [[1 0] [0 1]]]
+      (is (= [[0 0]]
+             (binding [max-x 10 max-y 10]
+               (prior-neighbours pt)))))
+    (is (= [[0 1] [1 0]]
+           (binding [max-x 10 max-y 10]
+             (prior-neighbours [1 1]))))))
