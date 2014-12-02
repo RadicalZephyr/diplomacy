@@ -96,9 +96,8 @@
           (map (fn [{:keys [pt pn value]}]
                  (println @rgbs)
                  (when (= -1 value)
-                   (if (seq pn)
-                     (let [labels (labels @rgbs pn)
-                           m (apply min labels)]
+                   (if-let [labels (seq (labels @rgbs pn))]
+                     (let [m (apply min labels)]
                        (dorun
                         (map #(swap! unions uf/union % m)
                              labels))
