@@ -221,14 +221,14 @@
   (let [rgb (get-all-rgb  img)
         img-w (.getWidth  img)
         img-h (.getHeight img)
-        nrgb (cn/connected-components rgb img-w img-h)]
+        nrgb (cn/connected-components img-w img-h rgb)]
     (rgb->image img nrgb)))
 
 (defn components [img]
   (let [rgb (get-all-rgb img)
         w (.getWidth  img)
         h (.getHeight img)
-        crgb (cn/connected-components rgb w h)
+        crgb (cn/connected-components w h rgb)
         pts (for [x (range w)
                   y (range h)]
               [x y])]

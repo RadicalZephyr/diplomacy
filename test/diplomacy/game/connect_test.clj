@@ -8,36 +8,35 @@
       (is (= [1 1 0 1 1 1
               1 1 0 1 0 0
               1 1 1 1 0 0]
-             (connected-components [-1 -1  0 -1 -1 -1
+             (connected-components 6 3
+                                   [-1 -1  0 -1 -1 -1
                                     -1 -1  0 -1  0  0
                                     -1 -1 -1 -1  0  0]
-                                   6 3
                                    :impl impl)))
 
       (is (= [1 1 0 2 2 2
               1 1 0 2 0 0
               1 1 1 0 0 0]
-             (connected-components [-1 -1  0 -1 -1 -1
+             (connected-components 6 3
+                                   [-1 -1  0 -1 -1 -1
                                     -1 -1  0 -1  0  0
                                     -1 -1 -1  0  0  0]
-                                   6 3
                                    :impl impl)))
 
       (is (= [1 1 0 2 2 2
               1 1 0 2 0 0
               1 1 1 0 3 0]
-             (connected-components [-1 -1  0 -1 -1 -1
+             (connected-components 6 3
+                                   [-1 -1  0 -1 -1 -1
                                     -1 -1  0 -1  0  0
                                     -1 -1 -1  0 -1  0]
-                                   6 3
                                    :impl impl)))
       (is (= [1 1 0 2 0 2
               1 1 0 2 2 2
               1 1 1 0 2 0]
-             (connected-components [-1 -1  0 -1  0 -1
+             (connected-components 6 3 [-1 -1  0 -1  0 -1
                                     -1 -1  0 -1 -1 -1
                                     -1 -1 -1  0 -1  0]
-                                   6 3
                                    :impl impl)))))
   (testing "Prior-neighbours"
     (binding [max-x 10 max-y 10]
