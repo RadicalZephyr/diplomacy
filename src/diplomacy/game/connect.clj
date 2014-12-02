@@ -90,8 +90,7 @@
                 ;; Union all the labels of the prior-neighbours of this pixel
                 (dorun
                  (map #(swap! union uf/union % m)
-                      (->> (prior-neighbours pt)
-                           (labels rgbs))))
+                      (labels rgbs pn)))
                 ;; And then set the label this point in the image with
                 ;; the smallest label
                 (recur (assoc2d rgbs pt m)
