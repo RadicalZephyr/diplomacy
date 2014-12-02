@@ -312,9 +312,16 @@
   (let [grouped (group-by #(> (count %) 100)
                    components-seq)]
     (def border-component (first (grouped true)))
-    (def words-components (partition 2 (flatten (grouped false)))))
+    (def words-component (partition 2 (flatten (grouped false)))))
+
+  (def corner-img (-> iimg
+                      (color-convert-image ColorSpace/CS_sRGB)
+                      (color-component words-component Color/BLACK)
+                      (color-convert-image ColorSpace/CS_GRAY)
+                      invert-image
+                      (threshold-image 150)))
    ;; Get the only element of the list
-  (draw-image iimg
+  (draw-image corner-img
               (get-canvas))
 
   (def corners (get-all-corners (w-by-h img [3 3]))))
