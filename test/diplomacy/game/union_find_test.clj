@@ -22,4 +22,10 @@
           (is (= three-over
                  (union test-struct first second)))
           (is (= seven-over
-                 (union test-struct second first))))))))
+                 (union test-struct second first))))))
+
+    (testing "Union of missing elements"
+      (is (thrown? clojure.lang.ExceptionInfo
+                   (find empty-union-find 1)))
+      (is (thrown? clojure.lang.ExceptionInfo
+                   (union empty-union-find 1 2))))))
