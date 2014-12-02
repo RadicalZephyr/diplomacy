@@ -1,15 +1,16 @@
-(ns diplomacy.game.union-find)
+(ns diplomacy.game.union-find
+  (:refer-clojure :exclude [find]))
 
-(defn ufind [parent x]
+(defn find [parent x]
   (loop [j x]
     (let [next (get parent j)]
       (if (not= 0 next)
         (recur next)
         j))))
 
-(defn uunion [parent x y]
-  (let [px (ufind parent x)
-        py (ufind parent y)]
+(defn union [parent x y]
+  (let [px (find parent x)
+        py (find parent y)]
     (if (not= px py)
       (assoc parent py px)
       parent)))
