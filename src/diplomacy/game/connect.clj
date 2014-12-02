@@ -73,8 +73,8 @@
 
 (defn labels [rgbs pts]
   (->> pts
-   (map (partial get2d rgbs))
-   (filter #(not= 0 %))))
+       (map (partial get2d rgbs))
+       (filter #(not= 0 %))))
 
 (defn pt->pt-and-pn [pts]
   (map (fn [pt]
