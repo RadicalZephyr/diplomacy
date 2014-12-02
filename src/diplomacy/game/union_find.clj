@@ -2,13 +2,12 @@
   (:refer-clojure :exclude [find]))
 
 (defn find [parent x]
-  (when (not= x 0)
-    (loop [j x]
-      (let [next (get parent j)]
-        (if (and next
-                 (not= 0 next))
-          (recur next)
-          j)))))
+  (loop [j x]
+    (let [next (get parent j)]
+      (if (and next
+               (not= 0 next))
+        (recur next)
+        j))))
 
 (defn pad-to [parent max]
   (into parent
