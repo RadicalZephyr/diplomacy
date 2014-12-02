@@ -74,6 +74,12 @@
 (defn labels [rgbs pts]
   (map (partial get2d rgbs) pts))
 
+(defn pt->pt-and-pn [pts]
+  (map (fn [pt]
+         {:pt pt
+          :pn (prior-neighbours pt)})
+       pts))
+
 (defn pass-one [rgbs pts]
   (let [label (atom 1)
         union (atom uf/empty-union-find)]
