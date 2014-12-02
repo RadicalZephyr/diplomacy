@@ -17,3 +17,5 @@
 
 (defn add-label [parent]
   (conj parent 0))
+
+(def empty-union-find [0])
