@@ -250,7 +250,7 @@
 (def color-cycle (cycle [Color/GREEN Color/BLUE Color/MAGENTA
                          Color/CYAN  Color/PINK Color/ORANGE]))
 
-(defn color-component [img [_ pts] color]
+(defn color-component [img pts color]
   (doseq [[x y] pts]
     (.setRGB img x y (.getRGB color))))
 
