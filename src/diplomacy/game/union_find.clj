@@ -16,7 +16,7 @@
               (repeat 0))))
 
 (defn union [parent x y]
-  (let [parent (pad-to parent (max x y))
+  (let [parent (pad-to parent (inc (max x y)))
         px (find parent x)
         py (find parent y)]
     (if (and px py
