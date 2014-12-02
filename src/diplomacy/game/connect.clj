@@ -86,17 +86,23 @@
     (->> (for [x (range max-x)
                y (range max-y)] [x y])
          pt->pt-and-pn
-         (map (fn [{:keys [pt pn]}]
-                (if (seq pn)
-                  (let [labels (labels rgbs pn)
-                        m (apply min labels)]
-                    (dorun (map #(swap! unions uf/union % m)
-                                labels))
-                    {:pt pt :label m})
-                  (let [lbl @label]
-                    (swap! label inc)
-                    {:pt pt :label lbl}))))
-         (reduce (fn [rgbs {:keys [pt label]}] (assoc2d rgbs pt label))
+         (map #(assoc % :value (get2d rgbs (:pt %))))
+
+         (map (fn [{:keys [pt pn value]}]
+                (if (= -1 value)
+                  (if (seq pn)
+                    (let [labels (labels rgbs pn)
+                          m (apply min labels)]
+                      (dorun (map #(swap! unions uf/union % m)
+                                  labels))
+                      {:pt pt :label m})
+                    (let [lbl @label]
+                      (swap! label inc)
+                      {:pt pt :label lbl}))
+
+                  {:pt pt :label value})))
+
+         #_(reduce (fn [rgbs {:keys [pt label]}] (assoc2d rgbs pt label))
                  rgbs))))
 
 (defn pass-one [rgbs pts]
