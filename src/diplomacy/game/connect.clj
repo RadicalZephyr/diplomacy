@@ -81,29 +81,31 @@
        pts))
 
 (defn first-pass [rgbs]
-  (let [label (atom 0)
+  (let [rgbs (atom rgbs)
+        label (atom 0)
         unions (atom uf/empty-union-find)]
-    (->> (for [x (range max-x)
-               y (range max-y)] [x y])
-         pt->pt-and-pn
-         (map #(assoc % :value (get2d rgbs (:pt %))))
 
-         (map (fn [{:keys [pt pn value]}]
-                (if (= -1 value)
-                  (if (seq pn)
-                    (let [labels (labels rgbs pn)
-                          m (apply min labels)]
-                      (dorun (map #(swap! unions uf/union % m)
-                                  labels))
-                      {:pt pt :label m})
-                    (let [lbl @label]
-                      (swap! label inc)
-                      {:pt pt :label lbl}))
+    (dorun
+     (->> (for [y (range max-y)
+                x (range max-x)] [x y])
+          pt->pt-and-pn
+          (map #(assoc % :value (get2d @rgbs (:pt %))))
 
-                  {:pt pt :label value})))
+          (map (fn [{:keys [pt pn value]}]
+                 (println @rgbs)
+                 (when (= -1 value)
+                   (if (seq pn)
+                     (let [labels (labels @rgbs pn)
+                           m (apply min labels)]
+                       (dorun
+                        (map #(swap! unions uf/union % m)
+                             labels))
+                       (swap! rgbs assoc2d pt m))
+                     (do
+                       (swap! label inc)
+                       (swap! rgbs assoc2d pt @label))))))))
 
-         #_(reduce (fn [rgbs {:keys [pt label]}] (assoc2d rgbs pt label))
-                 rgbs))))
+    [@rgbs @unions]))
 
 (defn pass-one [rgbs pts]
   (let [label (atom 1)
