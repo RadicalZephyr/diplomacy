@@ -242,9 +242,7 @@
             (fn [acc pt]
               (update-in acc [(cn/get2d crgb pt)]
                          conj pt))
-            {})
-           (filter (fn [[_ pts]]
-                     (> (count pts) 30)))))))
+            {})))))
 
 
 ;; Coloring components
