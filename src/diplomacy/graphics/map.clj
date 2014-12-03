@@ -17,13 +17,6 @@
                             LookupOp
                             PixelGrabber)))
 
-;; Utility macro
-
-(defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
-  `(let ~let-vec
-     (try
-       ~@forms
-       (finally (~close-fn ~binding)))))
 
 ;; Utility to open image files
 
@@ -296,7 +289,7 @@
 (do
   (def f (io/file "resources" "diplo-map-simple.gif"))
   (def img  (file->image f))
-  (with-cleanup [gfx (.createGraphics img)] .dispose
+  (util/with-cleanup [gfx (.createGraphics img)] .dispose
     (.setBackground gfx Color/WHITE)
     (.clearRect gfx 396 3 357 70)
     (.clearRect gfx 394 3 1 70))

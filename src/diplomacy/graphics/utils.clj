@@ -1,6 +1,14 @@
 (ns diplomacy.graphics.utils
   (:import java.awt.image.BufferedImage))
 
+;; Utility macro
+
+(defmacro with-cleanup [[binding value :as let-vec] close-fn & forms]
+  `(let ~let-vec
+     (try
+       ~@forms
+       (finally (~close-fn ~binding)))))
+
 (defn get-pixels [img x y w h]
   (cond
    (or (= w 0)
