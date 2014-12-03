@@ -1,7 +1,6 @@
 (ns diplomacy.graphics.utils
   (:import java.awt.image.BufferedImage))
 
-
 (defn get-pixels [img x y w h]
   (cond
    (or (= w 0)
