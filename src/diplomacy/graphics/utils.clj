@@ -14,7 +14,9 @@
                    (= img-type BufferedImage/TYPE_INT_RGB))
              (let [raster (.getRaster img)]
                (.getDataElements raster x y w h pixels))
-             (.setRGB img x y w h pixels 0 w))))))
+             (do
+               (.setRGB img x y w h pixels 0 w)
+               pixels))))))
 
 (defn set-pixels [img x y w h pixels]
   (cond
