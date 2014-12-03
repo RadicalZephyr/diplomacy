@@ -1,5 +1,6 @@
 (ns diplomacy.graphics.map
   (:require [diplomacy.game.connect :as cn]
+            [diplomacy.graphics.utils :as util]
             [clojure.java.io :as io]
             [seesaw.core :as s]
             [seesaw.graphics :as g])
@@ -170,7 +171,7 @@
 (defn get-all-rgb [img]
   (let [img-w (.getWidth  img)
         img-h (.getHeight img)]
-    (into [] (.getRGB img 0 0 img-w img-h nil 0 img-w))))
+    (util/get-pixels img 0 0 img-w img-h)))
 
 (defn make-get-xy [img]
   (let [img-w (.getWidth  img)]
