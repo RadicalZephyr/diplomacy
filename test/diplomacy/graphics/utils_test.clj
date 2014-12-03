@@ -55,11 +55,7 @@
 
 (deftest round-trip-test
   (testing "Starting with a vector"
-    (doseq [pixels [[1 2 3 4]
-                    [4 3 2 1]
-                    [0 1 0 1]
-                    [1 0 1 0]]
-            img-type [BufferedImage/TYPE_INT_RGB
+    (doseq [img-type [BufferedImage/TYPE_INT_RGB
                       BufferedImage/TYPE_INT_ARGB
                       BufferedImage/TYPE_INT_ARGB_PRE
                       BufferedImage/TYPE_3BYTE_BGR
@@ -70,7 +66,11 @@
                       BufferedImage/TYPE_BYTE_GRAY
                       BufferedImage/TYPE_USHORT_GRAY
                       BufferedImage/TYPE_BYTE_BINARY
-                      BufferedImage/TYPE_BYTE_INDEXED   ]
+                      BufferedImage/TYPE_BYTE_INDEXED]
+            pixels [[1 2 3 4]
+                    [4 3 2 1]
+                    [0 1 0 1]
+                    [1 0 1 0]]
             :let [img (BufferedImage. 2 2 img-type)]]
       (testing (str pixels " and type " (str-type img-type))
        (is (= pixels
