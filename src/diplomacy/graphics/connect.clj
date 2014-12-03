@@ -1,4 +1,4 @@
-(ns diplomacy.game.connect
+(ns diplomacy.graphics.connect
   (:require [diplomacy.game.union-find :as uf]))
 
 (def ^:dynamic max-x)
