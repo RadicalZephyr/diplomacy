@@ -50,7 +50,8 @@
                       BufferedImage/TYPE_3BYTE_BGR
                       BufferedImage/TYPE_4BYTE_ABGR]
             :let [img (BufferedImage. 2 2 img-type)]]
-      (is (= pixels
-             (-> img
-                 (set-pixels 0 0 2 2 pixels)
-              (get-pixels 0 0 2 2)))))))
+      (testing (str pixels " and type " img-type)
+       (is (= pixels
+              (-> img
+                  (set-pixels 0 0 2 2 pixels)
+                  (get-pixels 0 0 2 2))))))))
