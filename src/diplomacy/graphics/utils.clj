@@ -33,4 +33,5 @@
                    (= img-type BufferedImage/TYPE_INT_RGB))
              (let [raster (.getRaster img)]
                (.setDataElements raster x y w h pixels))
-             (.setRGB img x y w h pixels 0 w)))))
+             (.setRGB img x y w h pixels 0 w))
+           img)))
