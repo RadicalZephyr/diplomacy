@@ -15,7 +15,7 @@
              (let [raster (.getRaster img)]
                (.getDataElements raster x y w h pixels))
              (do
-               (.setRGB img x y w h pixels 0 w)
+               (.getRGB img x y w h pixels 0 w)
                pixels))))))
 
 (defn set-pixels [img x y w h pixels]
