@@ -38,3 +38,19 @@
       (let [img (BufferedImage. 10 10 img-type)]
         (is (= img
                (set-pixels img 0 0 2 2 [1 0 1 0])))))))
+
+(deftest round-trip-test
+  (testing "Starting with a vector"
+    (doseq [pixels [[1 2 3 4]
+                    [4 3 2 1]
+                    [0 1 0 1]
+                    [1 0 1 0]]
+            img-type [BufferedImage/TYPE_INT_RGB
+                      BufferedImage/TYPE_INT_ARGB
+                      BufferedImage/TYPE_3BYTE_BGR
+                      BufferedImage/TYPE_4BYTE_ABGR]
+            :let [img (BufferedImage. 2 2 img-type)]]
+      (is (= pixels
+             (-> img
+                 (set-pixels 0 0 2 2 pixels)
+              (get-pixels 0 0 2 2)))))))
